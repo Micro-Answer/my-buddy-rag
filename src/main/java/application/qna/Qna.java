@@ -1,6 +1,7 @@
 package application.qna;
 
 import core.qna.QnaSystem;
+import core.rag.QuestionDTO;
 
 class Qna implements QnaSystem {
 
@@ -26,10 +27,10 @@ class Qna implements QnaSystem {
     }
 
     @Override
-    public String readQuestion(String questionId) {
+    public QuestionDTO readQuestion(String questionId) {
         String response = "질문을 조회했습니다 " + String.format("%s", questionId);
         System.out.println(response);
-        return response;
+        return new Question("userId", "questionId", "title", "category", "contents", "createdDate");
 
     }
 

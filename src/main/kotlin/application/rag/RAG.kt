@@ -3,6 +3,7 @@ package com.example.rag.application.rag
 import core.rag.RagSystem
 import core.explanation.ExplainerSystem
 import core.qna.QnaSystem
+import core.rag.QuestionDTO
 import core.search.SearchSystem
 
 class RAG(qna: QnaSystem, explainer: ExplainerSystem, searchTool: SearchSystem) : RagSystem(qna, explainer, searchTool) {
@@ -20,7 +21,7 @@ class RAG(qna: QnaSystem, explainer: ExplainerSystem, searchTool: SearchSystem) 
         return qna.deleteQuestion(userId, questionId)
     }
 
-    override fun readQuestion(questionId: String): String {
+    override fun readQuestion(questionId: String): QuestionDTO {
         return qna.readQuestion(questionId)
     }
 
