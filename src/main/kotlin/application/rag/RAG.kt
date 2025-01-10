@@ -5,6 +5,7 @@ import core.explanation.ExplainerSystem
 import core.qna.QnaSystem
 import core.rag.OpinionDTO
 import core.rag.QuestionDTO
+import core.rag.QuestionTitleDTO
 import core.search.SearchSystem
 
 class RAG(qna: QnaSystem, explainer: ExplainerSystem, searchTool: SearchSystem) : RagSystem(qna, explainer, searchTool) {
@@ -26,7 +27,7 @@ class RAG(qna: QnaSystem, explainer: ExplainerSystem, searchTool: SearchSystem) 
         return qna.readQuestion(questionId)
     }
 
-    override fun readQuestionTitles(category: String?, startNum: Int, endNum: Int): String {
+    override fun readQuestionTitles(category: String?, startNum: Int, endNum: Int): Array<QuestionTitleDTO> {
         return qna.readQuestionTitles(category, startNum, endNum)
     }
 

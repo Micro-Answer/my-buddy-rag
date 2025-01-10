@@ -3,6 +3,7 @@ package application.qna;
 import core.qna.QnaSystem;
 import core.rag.OpinionDTO;
 import core.rag.QuestionDTO;
+import core.rag.QuestionTitleDTO;
 
 class Qna implements QnaSystem {
 
@@ -36,10 +37,14 @@ class Qna implements QnaSystem {
     }
 
     @Override
-    public String readQuestionTitles(String category, int startNum, int endNum) {
+    public QuestionTitleDTO[] readQuestionTitles(String category, int startNum, int endNum) {
         String response = "질문 목록을 조회했습니다 " + String.format("%s %d %d", category, startNum, endNum);
         System.out.println(response);
-        return response;
+        return new QuestionTitleDTO[]{
+                new QuestionTitle("questionId1", "title", "userId", "createdDate"),
+                new QuestionTitle("questionId2", "title", "userId", "createdDate"),
+                new QuestionTitle("questionId3", "title", "userId", "createdDate")
+        };
     }
 
     @Override
