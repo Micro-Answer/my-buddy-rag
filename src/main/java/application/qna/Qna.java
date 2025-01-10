@@ -1,6 +1,7 @@
 package application.qna;
 
 import core.qna.QnaSystem;
+import core.rag.OpinionDTO;
 import core.rag.QuestionDTO;
 
 class Qna implements QnaSystem {
@@ -63,9 +64,14 @@ class Qna implements QnaSystem {
     }
 
     @Override
-    public String readOpinions(String questionId, int startNum, int endNum) {
+    public OpinionDTO[] readOpinions(String questionId, int startNum, int endNum) {
         String response = "의견들을 조회했습니다 " + String.format("%s %d %d", questionId, startNum, endNum);
         System.out.println(response);
-        return response;
+        return new OpinionDTO[] {
+                new Opinion("userId", "questionId", "opinionId1", "title", "contents", "createdDate"),
+                new Opinion("userId", "questionId", "opinionId2", "title", "contents", "createdDate"),
+                new Opinion("userId", "questionId", "opinionId3", "title", "contents", "createdDate")
+
+        };
     }
 }

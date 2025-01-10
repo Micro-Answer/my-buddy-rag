@@ -3,6 +3,7 @@ package com.example.rag.application.rag
 import core.rag.RagSystem
 import core.explanation.ExplainerSystem
 import core.qna.QnaSystem
+import core.rag.OpinionDTO
 import core.rag.QuestionDTO
 import core.search.SearchSystem
 
@@ -41,7 +42,7 @@ class RAG(qna: QnaSystem, explainer: ExplainerSystem, searchTool: SearchSystem) 
         return qna.deleteOpinion(userId, opinionId)
     }
 
-    override fun readOpinions(questionId: String, startNum: Int, endNum: Int): String {
+    override fun readOpinions(questionId: String, startNum: Int, endNum: Int): Array<OpinionDTO> {
         return qna.readOpinions(questionId, startNum, endNum)
     }
 
