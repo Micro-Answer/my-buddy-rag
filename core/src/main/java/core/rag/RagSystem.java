@@ -4,7 +4,7 @@ import core.explanation.ExplainerSystem;
 import core.qna.QnaSystem;
 import core.search.SearchSystem;
 
-public abstract class RagSystem {
+public abstract class RagSystem implements Question, Opinion, Search {
     private final QnaSystem qna;
     private final ExplainerSystem explainer;
     private final SearchSystem searchTool;
@@ -14,4 +14,5 @@ public abstract class RagSystem {
         this.explainer = explainer;
         this.searchTool = searchTool;
     }
+
 }
