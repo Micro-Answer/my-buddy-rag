@@ -7,11 +7,11 @@ import core.search.SearchSystem;
 public abstract class RagSystem {
     private final QnaSystem qna;
     private final ExplainerSystem explainer;
-    private final SearchSystem search;
+    private final SearchSystem searchTool;
 
-    public RagSystem(QnaSystem qna, ExplainerSystem explainer, SearchSystem search) {
+    public RagSystem(QnaSystem qna, ExplainerSystem explainer, SearchSystem searchTool) {
         this.qna = qna;
         this.explainer = explainer;
-        this.search = search;
+        this.searchTool = searchTool;
     }
 }

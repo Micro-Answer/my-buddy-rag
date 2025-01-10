@@ -5,8 +5,8 @@ import core.qna.QnaSystem;
 import core.rag.RagSystem;
 import core.search.SearchSystem;
 
-public class RAG extends RagSystem {
-    public RAG(QnaSystem qna, ExplainerSystem explainer, SearchSystem search) {
-        super(qna, explainer, search);
+class RAG extends RagSystem {
+    RAG(QnaSystem qna, ExplainerSystem explainer, SearchSystem searchTool) {
+        super(qna, explainer, searchTool);
     }
 }
