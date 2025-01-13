@@ -20,6 +20,8 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":core"))
+
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
 }
 
