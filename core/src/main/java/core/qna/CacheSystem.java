@@ -5,7 +5,7 @@ import core.rag.QuestionTitleDTO;
 
 public interface CacheSystem {
     QuestionTitleDTO[] getRecentQuestionTitles(String category, int startNum, int endNum);
-    void putRecentQuestionTitle(QuestionTitleDTO questionTitle);
+    void putRecentQuestionTitle(String category, QuestionTitleDTO questionTitle);
     QuestionDTO getRecentQuestion(String questionId);
-    void putRecentQuestion(QuestionDTO question);
+    void putRecentQuestion(String questionId, QuestionDTO question);
 }
