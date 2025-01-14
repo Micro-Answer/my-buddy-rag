@@ -20,6 +20,13 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":core"))
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
 }
 
