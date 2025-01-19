@@ -1,7 +1,9 @@
 package com.example.rag.search;
 
 import core.search.SearchSystem;
+import org.springframework.stereotype.Component;
 
+@Component
 class SearchTool implements SearchSystem {
 
     @Override
