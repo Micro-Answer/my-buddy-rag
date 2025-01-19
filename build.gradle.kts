@@ -27,6 +27,22 @@ repositories {
 
 dependencies {
 	implementation(project(":core"))
+	implementation(project(":qna"))
+	implementation(project(":search"))
+	implementation(project(":explainer"))
+
+	implementation(project(":project-basic"))
+//	implementation(project(":project-basic-with-cache"))
+//	implementation(project(":project-basic-with-cache-queue"))
+//	implementation(project(":project-basic-with-cache-queue-executor-service"))
+//	implementation(project(":project-basic-with-cache-queue-completable-future"))
+//	implementation(project(":project-basic-with-cache-queue-spring-async"))
+//	implementation(project(":project-event-bus"))
+//	implementation(project(":project-event-bus-with-cache"))
+//	implementation(project(":project-event-bus-with-cache-queue"))
+//	implementation(project(":project-event-bus-with-cache-queue-rabbitmq"))
+//	implementation(project(":project-event-bus-with-cache-queue-spring-event"))
+//	implementation(project(":project-multi-instance-with-redis-rabbitmq"))
 
 //	implementation("org.springframework.boot:spring-boot-starter-actuator")
 //	implementation("org.springframework.boot:spring-boot-starter-amqp")
