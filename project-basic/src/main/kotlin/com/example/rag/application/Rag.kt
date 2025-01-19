@@ -13,42 +13,49 @@ class Rag(private val searchableQnA: SearchableQnA): RagSystem(null, null, null)
     }
 
     override fun enrollQuestion(userId: String?, title: String?, category: String?, contents: String?): String {
-        TODO("Not yet implemented")
+        return "enrollQuestion"
     }
 
     override fun updateQuestion(userId: String?, questionId: String?, category: String?, contents: String?): String {
-        TODO("Not yet implemented")
+        return "updateQuestion"
     }
 
     override fun deleteQuestion(userId: String?, questionId: String?): String {
-        TODO("Not yet implemented")
+        return "deleteQuestion"
     }
 
     override fun readQuestion(questionId: String?): QuestionDTO {
-        TODO("Not yet implemented")
+        return object: QuestionDTO {
+            override fun userId(): String { return "userId" }
+            override fun questionId(): String { return "questionId" }
+            override fun title(): String { return "questionId" }
+            override fun category(): String { return "category" }
+            override fun contents(): String { return "contents" }
+            override fun createdDate(): String { return "createdDate" }
+        }
     }
 
     override fun readQuestionTitles(category: String?, startNum: Int, endNum: Int): Array<QuestionTitleDTO> {
-        TODO("Not yet implemented")
+        return arrayOf()
     }
 
     override fun enrollOpinion(userId: String?, questionId: String?, title: String?, contents: String?): String {
-        TODO("Not yet implemented")
+        return "enrollOpinion"
     }
 
     override fun updateOpinion(userId: String?, opinionId: String?, title: String?, contents: String?): String {
-        TODO("Not yet implemented")
+        return "updateOpinion"
     }
 
     override fun deleteOpinion(userId: String?, opinionId: String?): String {
-        TODO("Not yet implemented")
+        return "deleteOpinion"
     }
 
     override fun readOpinions(questionId: String?, startNum: Int, endNum: Int): Array<OpinionDTO> {
-        TODO("Not yet implemented")
+        return arrayOf()
     }
 
     override fun search(contents: String?, age: Int, gender: String?, personalData: String?): String {
-        TODO("Not yet implemented")
+        return "search"
     }
 }
