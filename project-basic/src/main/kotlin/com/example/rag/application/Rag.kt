@@ -7,7 +7,7 @@ import core.rag.RagSystem
 import org.springframework.stereotype.Component
 
 @Component
-class Rag(private val searchableQnA: SearchableQnA): RagSystem(null, null, null) {
+class Rag(private var searchableQnA: SearchableQnA): RagSystem {
     init {
         println("create Rag")
     }
