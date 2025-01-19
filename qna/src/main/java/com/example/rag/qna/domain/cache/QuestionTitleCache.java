@@ -1,9 +1,9 @@
-package com.example.rag.qna.cache;
+package com.example.rag.qna.domain.cache;
 
 import core.rag.QuestionTitleDTO;
 
 public class QuestionTitleCache {
-    private QuestionTitleDTO[] cache;
+    private final QuestionTitleDTO[] cache;
     private int first;
 
     public QuestionTitleCache(int size) {

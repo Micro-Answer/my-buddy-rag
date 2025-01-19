@@ -1,4 +1,4 @@
-package com.example.rag.qna.cache;
+package com.example.rag.qna.domain.cache;
 
 import core.rag.QuestionTitleDTO;
 import org.springframework.stereotype.Component;
