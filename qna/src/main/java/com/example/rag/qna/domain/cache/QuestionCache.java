@@ -11,8 +11,8 @@ public class QuestionCache {
     private final Map<String, QuestionDTO> map;
     private final int maxSize;
 
-    public QuestionCache(int maxSize) {
-        this.maxSize = maxSize;
+    public QuestionCache() {
+        this.maxSize = 1000;
         this.map = new LinkedHashMap<>(1000, 0.75f, true);
     }
 

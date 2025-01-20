@@ -1,5 +1,6 @@
 package com.example.rag.application
 
+import core.explanation.ExplainerSystem
 import core.rag.OpinionDTO
 import core.rag.QuestionDTO
 import core.rag.QuestionTitleDTO
@@ -7,7 +8,7 @@ import core.rag.RagSystem
 import org.springframework.stereotype.Component
 
 @Component
-class Rag(private var searchableQnA: SearchableQnA): RagSystem {
+class Rag(private var searchableQnA: SearchableQnA, private var explainer: ExplainerSystem): RagSystem {
     init {
         println("create Rag")
     }
