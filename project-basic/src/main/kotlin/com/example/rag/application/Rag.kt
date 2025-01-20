@@ -15,7 +15,7 @@ class Rag(private var searchableQnA: SearchableQnA, private var explainer: Expla
     }
 
     override fun enrollQuestion(userId: String?, title: String?, category: String?, contents: String?): String {
-        return "enrollQuestion"
+        return searchableQnA.enrollQuestion(userId, title, category, contents)
     }
 
     override fun updateQuestion(userId: String?, questionId: String?, category: String?, contents: String?): String {
