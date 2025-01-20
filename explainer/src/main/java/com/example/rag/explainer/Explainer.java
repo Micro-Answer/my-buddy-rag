@@ -1,7 +1,9 @@
 package com.example.rag.explainer;
 
 import core.explanation.ExplainerSystem;
+import org.springframework.stereotype.Component;
 
+@Component
 class Explainer implements ExplainerSystem {
     @Override
     public String explain(String contents, String personalData) {

@@ -1,4 +1,4 @@
-package com.example.rag.qna;
+package com.example.rag.qna.domain;
 
 import core.rag.QuestionTitleDTO;
 

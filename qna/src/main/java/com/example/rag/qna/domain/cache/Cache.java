@@ -1,4 +1,4 @@
-package com.example.rag.qna.cache;
+package com.example.rag.qna.domain.cache;
 
 import core.qna.CacheSystem;
 import core.rag.QuestionDTO;
@@ -6,8 +6,8 @@ import core.rag.QuestionTitleDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@AllArgsConstructor
 @Component
+@AllArgsConstructor
 class Cache implements CacheSystem {
     private final CategoryQuestionTitleCache questionTitleCache;
     private final QuestionCache questionCache;
