@@ -76,9 +76,9 @@ class Qna implements QnaSystem {
     @Override
     public OpinionDTO[] readOpinions(String questionId, int startNum, int endNum) {
         return new OpinionDTO[] {
-                new Opinion("userId", "questionId", "opinionId1", "title", "contents", "createdDate"),
-                new Opinion("userId", "questionId", "opinionId2", "title", "contents", "createdDate"),
-                new Opinion("userId", "questionId", "opinionId3", "title", "contents", "createdDate")
+                new Opinion("userId", "questionId", "opinionId1", "title", "contents", LocalDateTime.now(), LocalDateTime.now()),
+                new Opinion("userId", "questionId", "opinionId2", "title", "contents", LocalDateTime.now(), LocalDateTime.now()),
+                new Opinion("userId", "questionId", "opinionId3", "title", "contents", LocalDateTime.now(), LocalDateTime.now())
         };
     }
 }
