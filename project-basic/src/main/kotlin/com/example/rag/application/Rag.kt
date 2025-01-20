@@ -6,6 +6,7 @@ import core.rag.QuestionDTO
 import core.rag.QuestionTitleDTO
 import core.rag.RagSystem
 import org.springframework.stereotype.Component
+import java.time.LocalDateTime
 
 @Component
 class Rag(private var searchableQnA: SearchableQnA, private var explainer: ExplainerSystem): RagSystem {
@@ -14,7 +15,7 @@ class Rag(private var searchableQnA: SearchableQnA, private var explainer: Expla
     }
 
     override fun enrollQuestion(userId: String?, title: String?, category: String?, contents: String?): String {
-        return "enrollQuestion"
+        return searchableQnA.enrollQuestion(userId, title, category, contents)
     }
 
     override fun updateQuestion(userId: String?, questionId: String?, category: String?, contents: String?): String {
@@ -27,12 +28,13 @@ class Rag(private var searchableQnA: SearchableQnA, private var explainer: Expla
 
     override fun readQuestion(questionId: String?): QuestionDTO {
         return object: QuestionDTO {
-            override fun userId(): String { return "userId" }
-            override fun questionId(): String { return "questionId" }
-            override fun title(): String { return "questionId" }
-            override fun category(): String { return "category" }
-            override fun contents(): String { return "contents" }
-            override fun createdDate(): String { return "createdDate" }
+            override fun getQuestionId(): String { return "questionId" }
+            override fun getCategory(): String { return "category" }
+            override fun getTitle(): String { return "title" }
+            override fun getContent(): String { return "content" }
+            override fun getUserId(): String { return "userId" }
+            override fun getCreatedAt(): LocalDateTime { return LocalDateTime.now() }
+            override fun getUpdatedAt(): LocalDateTime { return LocalDateTime.now() }
         }
     }
 

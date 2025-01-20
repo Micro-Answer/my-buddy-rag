@@ -1,7 +1,6 @@
 package com.example.rag.qna.domain;
 
 import com.example.rag.qna.adapter.output.opinion.OpinionPersistencePort;
-import com.example.rag.qna.adapter.output.question.QuestionEntity;
 import com.example.rag.qna.adapter.output.question.QuestionPersistencePort;
 import core.qna.QnaSystem;
 import core.rag.OpinionDTO;
@@ -22,18 +21,15 @@ class Qna implements QnaSystem {
     @Override
     public String enrollQuestion(String userId, String title, String category, String contents) {
         synchronized (this) {
-            questionPersistencePort.saveQuestion(new QuestionEntity(title, contents, userId, LocalDateTime.now(), LocalDateTime.now()));
+            questionPersistencePort.saveQuestion(new Question(category, title, contents, userId));
 //            cache.putRecentQuestion("questionId", new Question(userId, "questionId", title, category, contents, "createdDate"));
         }
         return "response";
     }
 
     @Override
-    public String updateQuestion(String userId, String questionId, String category, String contents) {
-        QuestionEntity question = questionPersistencePort.findQuestionById(questionId).get();
-        question.setContent(contents);
-        question.setUpdatedAt(LocalDateTime.now());
-        questionPersistencePort.updateQuestion(question);
+    public String updateQuestion(String userId, String questionId, String title, String category, String contents) {
+        questionPersistencePort.updateQuestion(new Question(questionId, category, title, contents, userId));
         return "response";
     }
 
@@ -45,7 +41,7 @@ class Qna implements QnaSystem {
 
     @Override
     public QuestionDTO readQuestion(String questionId) {
-        return new Question("userId", "questionId", "title", "category", "contents", "createdDate");
+        return new Question("userId", "questionId", "title", "category", "contents", LocalDateTime.now(), LocalDateTime.now());
 
     }
 
@@ -76,9 +72,7 @@ class Qna implements QnaSystem {
     @Override
     public OpinionDTO[] readOpinions(String questionId, int startNum, int endNum) {
         return new OpinionDTO[] {
-                new Opinion("userId", "questionId", "opinionId1", "title", "contents", "createdDate"),
-                new Opinion("userId", "questionId", "opinionId2", "title", "contents", "createdDate"),
-                new Opinion("userId", "questionId", "opinionId3", "title", "contents", "createdDate")
+                new Opinion("questionId", "opinionId1", "title", "contents", "userId", LocalDateTime.now(), LocalDateTime.now())
         };
     }
 }

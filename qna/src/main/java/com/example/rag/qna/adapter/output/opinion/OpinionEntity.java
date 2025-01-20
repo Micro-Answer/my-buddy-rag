@@ -20,14 +20,14 @@ public class OpinionEntity {
     @Column(name = "question_id", nullable = false)
     private String questionId;
 
-    @Column(name = "user_id", nullable = false)
-    private String userId;
-
     @Column(name = "title", nullable = false)
     private String title;
 
     @Column(name = "content", nullable = false, length = 1000)
     private String content;
+
+    @Column(name = "user_id", nullable = false)
+    private String userId;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -38,11 +38,11 @@ public class OpinionEntity {
     @Version
     private int version; // 낙관적 락
 
-    public OpinionEntity(String questionId, String userId, String title, String content, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public OpinionEntity(String questionId, String title, String content, String userId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.questionId = questionId;
-        this.userId = userId;
         this.title = title;
         this.content = content;
+        this.userId = userId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

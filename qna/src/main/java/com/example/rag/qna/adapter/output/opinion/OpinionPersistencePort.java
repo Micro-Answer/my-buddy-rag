@@ -1,12 +1,13 @@
 package com.example.rag.qna.adapter.output.opinion;
 
+import com.example.rag.qna.domain.Opinion;
+
 import java.util.List;
-import java.util.Optional;
 
 public interface OpinionPersistencePort {
-    void saveOpinion(OpinionEntity opinionEntity);
-    void updateOpinion(OpinionEntity opinionEntity);
+    void saveOpinion(Opinion opinion);
+    void updateOpinion(Opinion opinion);
     void deleteOpinion(String opinionId); // MongoDB 식별자의 문자열 타입 고려
-    Optional<OpinionEntity> findOpinionById(String opinionId); // MongoDB 식별자의 문자열 타입 고려
-    List<OpinionEntity> findOpinionsByQuestionId(String questionId, int offset, int limit);
+    Opinion findOpinionById(String opinionId); // MongoDB 식별자의 문자열 타입 고려
+    List<Opinion> findOpinionsByQuestionId(String questionId, int offset, int limit);
 }

@@ -18,6 +18,9 @@ public class QuestionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "category", nullable = false)
+    private String category;
+
     @Column(name = "title", nullable = false)
     private String title;
 
@@ -36,7 +39,8 @@ public class QuestionEntity {
     @Version
     private int version; // 낙관적 락
 
-    public QuestionEntity(String title, String content, String userId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public QuestionEntity(String category, String title, String content, String userId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.category = category;
         this.title = title;
         this.content = content;
         this.userId = userId;

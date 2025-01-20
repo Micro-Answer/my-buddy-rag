@@ -1,10 +1,13 @@
 package core.rag;
 
+import java.time.LocalDateTime;
+
 public interface QuestionDTO {
-    String userId();
-    String questionId();
-    String title();
-    String category();
-    String contents();
-    String createdDate();
+    String getQuestionId();
+    String getCategory();
+    String getTitle();
+    String getContent();
+    String getUserId();
+    LocalDateTime getCreatedAt();
+    LocalDateTime getUpdatedAt();
 }
