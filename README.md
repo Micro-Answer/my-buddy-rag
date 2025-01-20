@@ -22,6 +22,10 @@
 - [ ] Spring ApplicationEvent 활용 
 - [ ] 이벤트 브로커 활용
 
+### 처리량 향상 
+- [ ] Blocking Queue로 처리량 향상
+- [ ] 이벤트 브로커로 처리량 향상
+
 ### 캐싱 
 - [ ] 직접 구현 
 - [ ] Spring 캐싱 활용 
