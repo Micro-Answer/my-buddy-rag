@@ -45,7 +45,7 @@ class Qna implements QnaSystem {
 
     @Override
     public QuestionDTO readQuestion(String questionId) {
-        return new Question("userId", "questionId", "title", "category", "contents", "createdDate");
+        return new Question("userId", "questionId", "title", "category", "contents", LocalDateTime.now(), LocalDateTime.now());
 
     }
 

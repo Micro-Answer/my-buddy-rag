@@ -27,6 +27,9 @@ public class QuestionEntity {
     @Column(name = "user_id", nullable = false)
     private String userId;
 
+    @Column(name = "category", nullable = false)
+    private String category;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 

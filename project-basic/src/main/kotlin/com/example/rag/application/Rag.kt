@@ -6,6 +6,7 @@ import core.rag.QuestionDTO
 import core.rag.QuestionTitleDTO
 import core.rag.RagSystem
 import org.springframework.stereotype.Component
+import java.time.LocalDateTime
 
 @Component
 class Rag(private var searchableQnA: SearchableQnA, private var explainer: ExplainerSystem): RagSystem {
@@ -32,7 +33,8 @@ class Rag(private var searchableQnA: SearchableQnA, private var explainer: Expla
             override fun title(): String { return "questionId" }
             override fun category(): String { return "category" }
             override fun contents(): String { return "contents" }
-            override fun createdDate(): String { return "createdDate" }
+            override fun createdAt(): LocalDateTime { return LocalDateTime.now() }
+            override fun updatedAt(): LocalDateTime { return LocalDateTime.now() }
         }
     }
 
