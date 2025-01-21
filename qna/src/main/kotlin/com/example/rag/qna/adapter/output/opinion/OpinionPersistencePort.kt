@@ -1,6 +1,6 @@
 package com.example.rag.qna.adapter.output.opinion
 
-import com.example.rag.qna.domain.Opinion
+import core.rag.Opinion
 
 interface OpinionPersistencePort {
     fun saveOpinion(domain: Opinion): OpinionEntity
