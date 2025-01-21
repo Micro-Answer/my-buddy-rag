@@ -5,8 +5,9 @@ import com.example.rag.qna.adapter.output.question.QuestionPersistencePort
 import core.qna.QnaSystem
 import core.rag.Opinion
 import core.rag.Question
-import core.rag.QuestionTitleDTO
+import core.rag.QuestionTitle
 import org.springframework.stereotype.Component
+import java.time.LocalDateTime
 
 @Component
 class Qna(private val questionPersistencePort: QuestionPersistencePort, private val opinionPersistencePort: OpinionPersistencePort): QnaSystem {
@@ -15,7 +16,7 @@ class Qna(private val questionPersistencePort: QuestionPersistencePort, private 
     override fun deleteQuestion(userId: String, questionId: String): Unit = questionPersistencePort.deleteQuestion(questionId)
     override fun readQuestion(questionId: String): Question = questionPersistencePort.findQuestionById(questionId)
     // 논리 오류 수정 대상 
-    override fun readQuestionTitles(category: String, offset: Int, limit: Int): List<QuestionTitleDTO> = questionPersistencePort.findQuestionsByUserId(category, offset, limit).map { question -> QuestionTitle(question.questionId, question.title, question.userId, question.createdAt) }
+    override fun readQuestionTitles(category: String, offset: Int, limit: Int): List<QuestionTitle> = questionPersistencePort.findQuestionsByUserId(category, offset, limit).map { question -> QuestionTitle(question.questionId ?: "", question.title, question.userId, question.createdAt ?: LocalDateTime.now()) }
     override fun enrollOpinion(userId: String, questionId: String, title: String, content: String): Unit = opinionPersistencePort.saveOpinion(Opinion(questionId, title, content, userId))
     override fun updateOpinion(userId: String, opinionId: String, title: String, content: String): Unit = opinionPersistencePort.updateOpinion(Opinion("questionId", title, content, userId, opinionId))
     override fun deleteOpinion(userId: String, opinionId: String): Unit = opinionPersistencePort.deleteOpinion(opinionId)

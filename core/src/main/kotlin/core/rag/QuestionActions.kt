@@ -5,5 +5,5 @@ interface QuestionActions {
     fun updateQuestion(userId: String, questionId: String, title: String, category: String, content: String): String
     fun deleteQuestion(userId: String, questionId: String): String
     fun readQuestion(questionId: String): Question
-    fun readQuestionTitles(category: String, offset: Int, limit: Int): Array<QuestionTitleDTO>
+    fun readQuestionTitles(category: String, offset: Int, limit: Int): Array<QuestionTitle>
 }

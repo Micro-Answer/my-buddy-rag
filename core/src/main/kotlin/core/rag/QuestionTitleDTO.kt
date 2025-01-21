@@ -2,9 +2,4 @@ package core.rag
 
 import java.time.LocalDateTime
 
-interface QuestionTitleDTO {
-    fun questionId(): String
-    fun title(): String
-    fun userId(): String
-    fun createdAt(): LocalDateTime
-}
+data class QuestionTitle(val questionId: String, val title: String, val userId: String, val createdAt: LocalDateTime)

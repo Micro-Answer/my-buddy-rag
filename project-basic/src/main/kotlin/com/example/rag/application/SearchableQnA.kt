@@ -3,6 +3,7 @@ package com.example.rag.application
 import core.qna.QnaSystem
 import core.rag.Opinion
 import core.rag.Question
+import core.rag.QuestionTitle
 import core.rag.QuestionTitleDTO
 import core.search.SearchSystem
 import org.springframework.stereotype.Component
@@ -35,7 +36,7 @@ class SearchableQnA(private val qna: QnaSystem, private val search: SearchSystem
         return qna.readQuestion(questionId)
     }
 
-    fun readQuestionTitles(category: String, offset: Int, limit: Int): Array<QuestionTitleDTO> {
+    fun readQuestionTitles(category: String, offset: Int, limit: Int): Array<QuestionTitle> {
         return qna.readQuestionTitles(category, offset, limit)
     }
 

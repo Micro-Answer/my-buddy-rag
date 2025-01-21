@@ -3,7 +3,7 @@ package com.example.rag.application
 import core.explanation.ExplainerSystem
 import core.rag.Opinion
 import core.rag.Question
-import core.rag.QuestionTitleDTO
+import core.rag.QuestionTitle
 import core.rag.RagSystem
 import org.springframework.stereotype.Component
 
@@ -29,7 +29,7 @@ class Rag(private val searchableQnA: SearchableQnA, private val explainer: Expla
         return searchableQnA.readQuestion(questionId)
     }
 
-    override fun readQuestionTitles(category: String, offset: Int, limit: Int): Array<QuestionTitleDTO> {
+    override fun readQuestionTitles(category: String, offset: Int, limit: Int): Array<QuestionTitle> {
         return searchableQnA.readQuestionTitles(category, offset, limit)
     }
 
