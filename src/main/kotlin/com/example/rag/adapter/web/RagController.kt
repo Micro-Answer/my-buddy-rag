@@ -44,8 +44,8 @@ class RagController(private val rag: RagSystem) {
 
     // 질문 타이틀 목록 조회
     @GetMapping("/questions/titles")
-    fun readQuestionTitles(@RequestParam category: String?, @RequestParam start: Int, @RequestParam end: Int): ResponseEntity<Array<QuestionTitleDTO>> {
-        return ResponseEntity.ok(rag.readQuestionTitles(category, start, end))
+    fun readQuestionTitles(@RequestParam category: String?, @RequestParam offset: Int, @RequestParam limit: Int): ResponseEntity<Array<QuestionTitleDTO>> {
+        return ResponseEntity.ok(rag.readQuestionTitles(category, offset, limit))
     }
 
     // 의견 등록
@@ -71,8 +71,8 @@ class RagController(private val rag: RagSystem) {
 
     // 의견 목록 조회
     @GetMapping("/opinions")
-    fun readOpinions(@RequestParam questionId: String, @RequestParam start: Int, @RequestParam end: Int): ResponseEntity<Array<OpinionDTO>> {
-        return ResponseEntity.ok(rag.readOpinions(questionId, start, end))
+    fun readOpinions(@RequestParam questionId: String, @RequestParam offset: Int, @RequestParam limit: Int): ResponseEntity<Array<OpinionDTO>> {
+        return ResponseEntity.ok(rag.readOpinions(questionId, offset, limit))
     }
 
     // 맞춤형 해설 질의응답 검색
