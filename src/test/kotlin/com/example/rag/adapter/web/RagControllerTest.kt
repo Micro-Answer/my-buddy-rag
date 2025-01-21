@@ -1,9 +1,9 @@
-package com.example.rag.adapter.`in`.web
+package com.example.rag.adapter.web
 
-import com.example.rag.adapter.`in`.web.request.OpinionRequest
-import com.example.rag.adapter.`in`.web.request.OpinionUpdateRequest
-import com.example.rag.adapter.`in`.web.request.QuestionRequest
-import com.example.rag.adapter.`in`.web.request.QuestionUpdateRequest
+import com.example.rag.adapter.web.request.OpinionRequest
+import com.example.rag.adapter.web.request.OpinionUpdateRequest
+import com.example.rag.adapter.web.request.QuestionRequest
+import com.example.rag.adapter.web.request.QuestionUpdateRequest
 import core.rag.RagSystem
 import core.rag.QuestionDTO
 import org.junit.jupiter.api.BeforeEach

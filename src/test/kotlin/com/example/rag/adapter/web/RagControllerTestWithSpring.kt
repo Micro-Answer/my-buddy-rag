@@ -1,4 +1,4 @@
-//package com.example.rag.adapter.`in`.web
+//package com.example.rag.adapter.web
 //
 //import com.example.rag.adapter.`in`.web.request.OpinionRequest
 //import com.example.rag.adapter.`in`.web.request.OpinionUpdateRequest

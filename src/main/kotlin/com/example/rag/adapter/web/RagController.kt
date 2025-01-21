@@ -1,9 +1,9 @@
-package com.example.rag.adapter.`in`.web
+package com.example.rag.adapter.web
 
-import com.example.rag.adapter.`in`.web.request.OpinionRequest
-import com.example.rag.adapter.`in`.web.request.OpinionUpdateRequest
-import com.example.rag.adapter.`in`.web.request.QuestionRequest
-import com.example.rag.adapter.`in`.web.request.QuestionUpdateRequest
+import com.example.rag.adapter.web.request.OpinionRequest
+import com.example.rag.adapter.web.request.OpinionUpdateRequest
+import com.example.rag.adapter.web.request.QuestionRequest
+import com.example.rag.adapter.web.request.QuestionUpdateRequest
 import core.rag.OpinionDTO
 import core.rag.QuestionDTO
 import core.rag.QuestionTitleDTO
