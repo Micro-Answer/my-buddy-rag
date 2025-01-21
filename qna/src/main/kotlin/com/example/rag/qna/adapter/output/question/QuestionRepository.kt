@@ -1,17 +1,14 @@
-package com.example.rag.qna.adapter.output.question;
+package com.example.rag.qna.adapter.output.question
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
-
-import java.time.LocalDateTime;
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
+import org.springframework.stereotype.Repository
+import java.time.LocalDateTime
 
 @Repository
-public interface QuestionRepository extends JpaRepository<QuestionEntity, Long> {
-
+interface QuestionRepository: JpaRepository<QuestionEntity, Long> {
     @Query("SELECT q FROM QuestionEntity q WHERE q.userId = :userId ORDER BY q.createdAt DESC")
-    List<QuestionEntity> findByUserId(String userId, int offset, int limit);
+    fun findByUserId(userId: String, offset: Int, limit: Int): List<QuestionEntity>
 
     /**
      * 사용자 ID로 질문 목록 조회 (최신순 정렬)
@@ -20,7 +17,7 @@ public interface QuestionRepository extends JpaRepository<QuestionEntity, Long> 
      * @return 사용자별 질문 목록
      */
     @Query("SELECT q FROM QuestionEntity q WHERE q.userId = :userId ORDER BY q.createdAt DESC")
-    List<QuestionEntity> findByUserId(String userId);
+    fun findByUserId(userId: String): List<QuestionEntity>
 
     /**
      * 특정 기간 내 질문 조회 (최신순 정렬)
@@ -30,7 +27,7 @@ public interface QuestionRepository extends JpaRepository<QuestionEntity, Long> 
      * @return 기간 내 질문 목록
      */
     @Query("SELECT q FROM QuestionEntity q WHERE q.createdAt BETWEEN :startDate AND :endDate ORDER BY q.createdAt DESC")
-    List<QuestionEntity> findByCreatedAtBetween(LocalDateTime startDate, LocalDateTime endDate);
+    fun findByCreatedAtBetween(startDate: LocalDateTime, endDate: LocalDateTime): List<QuestionEntity>
 
     /**
      * 제목에 키워드가 포함된 질문 검색 (최신순 정렬)
@@ -39,7 +36,7 @@ public interface QuestionRepository extends JpaRepository<QuestionEntity, Long> 
      * @return 제목에 키워드가 포함된 질문 목록
      */
     @Query("SELECT q FROM QuestionEntity q WHERE q.title LIKE %:keyword% ORDER BY q.createdAt DESC")
-    List<QuestionEntity> findByTitleContaining(String keyword);
+    fun findByTitleContaining(keyword: String): List<QuestionEntity>
 
     /**
      * 제목과 내용에 키워드가 포함된 질문 검색 (최신순 정렬)
@@ -48,7 +45,7 @@ public interface QuestionRepository extends JpaRepository<QuestionEntity, Long> 
      * @return 제목 또는 내용에 키워드가 포함된 질문 목록
      */
     @Query("SELECT q FROM QuestionEntity q WHERE q.title LIKE %:keyword% OR q.content LIKE %:keyword% ORDER BY q.createdAt DESC")
-    List<QuestionEntity> findByTitleOrContentContaining(String keyword);
+    fun findByTitleOrContentContaining(keyword: String): List<QuestionEntity>
 
     /**
      * 페이징을 위한 질문 조회
@@ -58,5 +55,5 @@ public interface QuestionRepository extends JpaRepository<QuestionEntity, Long> 
      * @return 질문 목록
      */
     @Query(value = "SELECT * FROM questions ORDER BY created_at DESC LIMIT :limit OFFSET :offset", nativeQuery = true)
-    List<QuestionEntity> findAllWithPagination(int offset, int limit);
+    fun findAllWithPagination(offset: Int, limit: Int): List<QuestionEntity>
 }

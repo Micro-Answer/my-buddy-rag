@@ -1,5 +1,7 @@
 package com.example.rag.qna.adapter.output.opinion
 
+import com.example.rag.qna.adapter.output.DBTransparency.idForMySQL
+import com.example.rag.qna.adapter.output.DBTransparency.idForTransparency
 import core.rag.Opinion
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
@@ -8,9 +10,6 @@ import java.time.LocalDateTime
 @Component
 class OpinionPersistenceAdapter(private val opinionRepository: OpinionRepository) : OpinionPersistencePort {
     private companion object OpinionMapper {
-        fun idForTransparency(opinionId: Long?) = opinionId.toString()
-        fun idForMySQL(opinionId: String?) = opinionId?.toLong() ?: -1
-
         fun Opinion.createEntity() = OpinionEntity(questionId, title, content, userId, LocalDateTime.now())
         fun OpinionEntity.toDomainModel() = Opinion(idForTransparency(id), questionId, title, content, userId, createdAt, updatedAt)
         fun OpinionEntity.updateWithDomain(domain: Opinion) {
