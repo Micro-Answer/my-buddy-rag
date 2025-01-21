@@ -11,7 +11,7 @@ import java.time.LocalDateTime
 class OpinionPersistenceAdapter(private val opinionRepository: OpinionRepository) : OpinionPersistencePort {
     private companion object OpinionMapper {
         fun Opinion.createEntity() = OpinionEntity(questionId, title, content, userId, LocalDateTime.now())
-        fun OpinionEntity.toDomainModel() = Opinion(idForTransparency(id), questionId, title, content, userId, createdAt, updatedAt)
+        fun OpinionEntity.toDomainModel() = Opinion(questionId, title, content, userId, idForTransparency(id), createdAt, updatedAt)
         fun OpinionEntity.updateWithDomain(domain: Opinion) {
             this.title = domain.title
             this.content = domain.content
@@ -19,9 +19,9 @@ class OpinionPersistenceAdapter(private val opinionRepository: OpinionRepository
         }
     }
 
-    override fun saveOpinion(domain: Opinion): OpinionEntity = opinionRepository.save(domain.createEntity())
+    override fun saveOpinion(domain: Opinion) { opinionRepository.save(domain.createEntity()) }
     override fun updateOpinion(domain: Opinion) = getOpinionEntity(domain.questionId).updateWithDomain(domain)
-    override fun deleteOpinion(opinionId: String): Unit = opinionRepository.deleteById(idForMySQL(opinionId))
+    override fun deleteOpinion(opinionId: String) { opinionRepository.deleteById(idForMySQL(opinionId)) }
     override fun findOpinionById(opinionId: String): Opinion = getOpinionEntity(opinionId).toDomainModel()
     override fun findOpinionsByQuestionId(questionId: String, offset: Int, limit: Int): List<Opinion> = getOpinions(questionId, offset, limit)
 

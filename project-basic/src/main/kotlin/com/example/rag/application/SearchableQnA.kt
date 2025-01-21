@@ -60,6 +60,6 @@ class SearchableQnA(private val qna: QnaSystem, private val search: SearchSystem
 
     fun search(query: String): String {
         val questionId = search.search(query)
-        return qna.readOpinions(questionId, 1, 1)[0].getContent()
+        return qna.readOpinions(questionId, 1, 1).get(0).content
     }
 }
