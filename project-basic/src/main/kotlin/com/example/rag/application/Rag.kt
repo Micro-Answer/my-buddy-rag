@@ -38,7 +38,7 @@ class Rag(private var searchableQnA: SearchableQnA, private var explainer: Expla
         }
     }
 
-    override fun readQuestionTitles(category: String?, startNum: Int, endNum: Int): Array<QuestionTitleDTO> {
+    override fun readQuestionTitles(category: String?, startNum: Int, endNum: Int): Array<QuestionTitleDTO?>? {
         return arrayOf()
     }
 
@@ -54,7 +54,7 @@ class Rag(private var searchableQnA: SearchableQnA, private var explainer: Expla
         return "deleteOpinion"
     }
 
-    override fun readOpinions(questionId: String?, startNum: Int, endNum: Int): Array<OpinionDTO> {
+    override fun readOpinions(questionId: String?, startNum: Int, endNum: Int): Array<OpinionDTO?>? {
         return arrayOf()
     }
 
