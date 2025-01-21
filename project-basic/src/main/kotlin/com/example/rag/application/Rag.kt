@@ -6,59 +6,51 @@ import core.rag.QuestionDTO
 import core.rag.QuestionTitleDTO
 import core.rag.RagSystem
 import org.springframework.stereotype.Component
-import java.time.LocalDateTime
 
 @Component
-class Rag(private var searchableQnA: SearchableQnA, private var explainer: ExplainerSystem): RagSystem {
+class Rag(private val searchableQnA: SearchableQnA, private val explainer: ExplainerSystem): RagSystem {
     init {
         println("create Rag")
     }
 
-    override fun enrollQuestion(userId: String?, title: String?, category: String?, contents: String?): String {
-        return searchableQnA.enrollQuestion(userId, title, category, contents)
+    override fun enrollQuestion(userId: String, title: String, category: String, content: String): String {
+        return searchableQnA.enrollQuestion(userId, title, category, content)
     }
 
-    override fun updateQuestion(userId: String?, questionId: String?, category: String?, contents: String?): String {
-        return "updateQuestion"
+    override fun updateQuestion(userId: String, questionId: String, category: String, content: String): String {
+        return searchableQnA.updateQuestion(userId, questionId, category, content)
     }
 
-    override fun deleteQuestion(userId: String?, questionId: String?): String {
-        return "deleteQuestion"
+    override fun deleteQuestion(userId: String, questionId: String): String {
+        return searchableQnA.deleteQuestion(userId, questionId)
     }
 
-    override fun readQuestion(questionId: String?): QuestionDTO {
-        return object: QuestionDTO {
-            override fun getQuestionId(): String { return "questionId" }
-            override fun getCategory(): String { return "category" }
-            override fun getTitle(): String { return "title" }
-            override fun getContent(): String { return "content" }
-            override fun getUserId(): String { return "userId" }
-            override fun getCreatedAt(): LocalDateTime { return LocalDateTime.now() }
-            override fun getUpdatedAt(): LocalDateTime { return LocalDateTime.now() }
-        }
+    override fun readQuestion(questionId: String): QuestionDTO {
+        return searchableQnA.readQuestion(questionId)
     }
 
-    override fun readQuestionTitles(category: String?, startNum: Int, endNum: Int): Array<QuestionTitleDTO?>? {
-        return arrayOf()
+    override fun readQuestionTitles(category: String, offset: Int, limit: Int): Array<QuestionTitleDTO> {
+        return searchableQnA.readQuestionTitles(category, offset, limit)
     }
 
-    override fun enrollOpinion(userId: String?, questionId: String?, title: String?, contents: String?): String {
-        return "enrollOpinion"
+    override fun enrollOpinion(userId: String, questionId: String, title: String, content: String): String {
+        return searchableQnA.enrollOpinion(userId, questionId, title, content)
     }
 
-    override fun updateOpinion(userId: String?, opinionId: String?, title: String?, contents: String?): String {
-        return "updateOpinion"
+    override fun updateOpinion(userId: String, opinionId: String, title: String, content: String): String {
+        return searchableQnA.updateOpinion(userId, opinionId, title, content)
     }
 
-    override fun deleteOpinion(userId: String?, opinionId: String?): String {
-        return "deleteOpinion"
+    override fun deleteOpinion(userId: String, opinionId: String): String {
+        return searchableQnA.deleteOpinion(userId, opinionId)
     }
 
-    override fun readOpinions(questionId: String?, startNum: Int, endNum: Int): Array<OpinionDTO?>? {
-        return arrayOf()
+    override fun readOpinions(questionId: String, offset: Int, limit: Int): Array<OpinionDTO> {
+        return searchableQnA.readOpinions(questionId, offset, limit)
     }
 
-    override fun search(contents: String?, age: Int, gender: String?, personalData: String?): String {
-        return "search"
+    override fun search(query: String, age: Int, gender: String?, personalData: String?): String {
+        val content = searchableQnA.search(query, age, gender, personalData)
+        return explainer.explain(content, "나이: %d, 성별: %s, 개인정보: %s".format(age, gender, personalData))
     }
 }
