@@ -1,7 +1,7 @@
 package com.example.rag.application
 
 import core.explanation.ExplainerSystem
-import core.rag.OpinionDTO
+import core.rag.Opinion
 import core.rag.QuestionDTO
 import core.rag.QuestionTitleDTO
 import core.rag.RagSystem
@@ -45,7 +45,7 @@ class Rag(private val searchableQnA: SearchableQnA, private val explainer: Expla
         return searchableQnA.deleteOpinion(userId, opinionId)
     }
 
-    override fun readOpinions(questionId: String, offset: Int, limit: Int): Array<OpinionDTO> {
+    override fun readOpinions(questionId: String, offset: Int, limit: Int): Array<Opinion> {
         return searchableQnA.readOpinions(questionId, offset, limit)
     }
 

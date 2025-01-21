@@ -1,7 +1,7 @@
 package com.example.rag.application
 
 import core.qna.QnaSystem
-import core.rag.OpinionDTO
+import core.rag.Opinion
 import core.rag.QuestionDTO
 import core.rag.QuestionTitleDTO
 import core.search.SearchSystem
@@ -54,7 +54,7 @@ class SearchableQnA(private val qna: QnaSystem, private val search: SearchSystem
         return "success"
     }
 
-    fun readOpinions(questionId: String, offset: Int, limit: Int): Array<OpinionDTO> {
+    fun readOpinions(questionId: String, offset: Int, limit: Int): Array<Opinion> {
         return qna.readOpinions(questionId, offset, limit)
     }
 

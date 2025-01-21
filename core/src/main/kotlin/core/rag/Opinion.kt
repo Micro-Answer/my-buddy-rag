@@ -1,9 +1,14 @@
 package core.rag
 
-interface Opinion {
-    fun enrollOpinion(userId: String, questionId: String, title: String, content: String): String
-    fun updateOpinion(userId: String, opinionId: String, title: String, content: String): String
-    fun deleteOpinion(userId: String, opinionId: String): String
-    fun readOpinions(questionId: String, offset: Int, limit: Int): Array<OpinionDTO>
-}
+import java.time.LocalDateTime
+
+data class Opinion (
+    val opinionId: String? = null,
+    val questionId: String,
+    val title: String,
+    val content: String,
+    val userId: String,
+    val createdAt: LocalDateTime,
+    val updatedAt: LocalDateTime
+)
 

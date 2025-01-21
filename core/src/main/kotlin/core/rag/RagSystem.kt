@@ -1,3 +1,3 @@
 package core.rag
 
-interface RagSystem: Question, Opinion, Search
+interface RagSystem: Question, OpinionActions, Search

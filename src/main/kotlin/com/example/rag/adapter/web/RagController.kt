@@ -4,7 +4,7 @@ import com.example.rag.adapter.web.request.OpinionRequest
 import com.example.rag.adapter.web.request.OpinionUpdateRequest
 import com.example.rag.adapter.web.request.QuestionRequest
 import com.example.rag.adapter.web.request.QuestionUpdateRequest
-import core.rag.OpinionDTO
+import core.rag.Opinion
 import core.rag.QuestionDTO
 import core.rag.QuestionTitleDTO
 import core.rag.RagSystem
@@ -71,7 +71,7 @@ class RagController(private val rag: RagSystem) {
 
     // 의견 목록 조회
     @GetMapping("/opinions")
-    fun readOpinions(@RequestParam questionId: String, @RequestParam offset: Int, @RequestParam limit: Int): ResponseEntity<Array<OpinionDTO>> {
+    fun readOpinions(@RequestParam questionId: String, @RequestParam offset: Int, @RequestParam limit: Int): ResponseEntity<Array<Opinion>> {
         return ResponseEntity.ok(rag.readOpinions(questionId, offset, limit))
     }
 

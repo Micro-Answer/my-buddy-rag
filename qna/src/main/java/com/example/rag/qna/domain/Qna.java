@@ -3,7 +3,7 @@ package com.example.rag.qna.domain;
 import com.example.rag.qna.adapter.output.opinion.OpinionPersistencePort;
 import com.example.rag.qna.adapter.output.question.QuestionPersistencePort;
 import core.qna.QnaSystem;
-import core.rag.OpinionDTO;
+import core.rag.Opinion;
 import core.rag.QuestionDTO;
 import core.rag.QuestionTitleDTO;
 import lombok.AllArgsConstructor;
@@ -70,8 +70,8 @@ class Qna implements QnaSystem {
     }
 
     @Override
-    public OpinionDTO[] readOpinions(String questionId, int startNum, int endNum) {
-        return new OpinionDTO[] {
+    public Opinion[] readOpinions(String questionId, int startNum, int endNum) {
+        return new Opinion[] {
                 new Opinion("questionId", "opinionId1", "title", "contents", "userId", LocalDateTime.now(), LocalDateTime.now())
         };
     }
