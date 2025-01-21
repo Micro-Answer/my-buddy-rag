@@ -25,7 +25,7 @@ class RagController(private val rag: RagSystem) {
     // 질문 수정
     @PutMapping("/questions/{questionId}")
     fun updateQuestion(@PathVariable questionId: String, @RequestBody request: QuestionUpdateRequest): ResponseEntity<String> {
-        rag.updateQuestion(request.userId, questionId, request.category, request.title)
+        rag.updateQuestion(request.userId, questionId, request.title, request.category, request.content)
         return ResponseEntity.ok("질문 수정 성공!")
     }
 

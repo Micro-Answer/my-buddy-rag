@@ -6,7 +6,6 @@ import core.rag.QuestionDTO
 import core.rag.QuestionTitleDTO
 import core.search.SearchSystem
 import org.springframework.stereotype.Component
-import java.time.LocalDateTime
 
 @Component
 class SearchableQnA(private val qna: QnaSystem, private val search: SearchSystem) {
@@ -14,51 +13,53 @@ class SearchableQnA(private val qna: QnaSystem, private val search: SearchSystem
         println("create SearchableQnA")
     }
 
-    fun enrollQuestion(userId: String?, title: String?, category: String?, contents: String?): String {
-        return qna.enrollQuestion(userId, title, category, contents)
+    fun enrollQuestion(userId: String, title: String, category: String, content: String): String {
+        val questionId = qna.enrollQuestion(userId, title, category, content)
+        search.enrollQuestion(questionId, title, category, content)
+        return "success"
     }
 
-    fun updateQuestion(userId: String?, questionId: String?, category: String?, contents: String?): String {
-        return "updateQuestion"
+    fun updateQuestion(userId: String, questionId: String, title: String, category: String, content: String): String {
+        qna.updateQuestion(userId, questionId, title, category, content)
+        search.updateQuestion(questionId, title, category, content)
+        return "success"
     }
 
-    fun deleteQuestion(userId: String?, questionId: String?): String {
-        return "deleteQuestion"
+    fun deleteQuestion(userId: String, questionId: String): String {
+        qna.deleteQuestion(userId, questionId)
+        search.deleteQuestion(questionId)
+        return "success"
     }
 
-    fun readQuestion(questionId: String?): QuestionDTO {
-        return object: QuestionDTO {
-            override fun getQuestionId(): String { return "questionId" }
-            override fun getCategory(): String { return "category" }
-            override fun getTitle(): String { return "title" }
-            override fun getContent(): String { return "content" }
-            override fun getUserId(): String { return "userId" }
-            override fun getCreatedAt(): LocalDateTime { return LocalDateTime.now() }
-            override fun getUpdatedAt(): LocalDateTime { return LocalDateTime.now() }
-        }
+    fun readQuestion(questionId: String): QuestionDTO {
+        return qna.readQuestion(questionId)
     }
 
-    fun readQuestionTitles(category: String?, startNum: Int, endNum: Int): Array<QuestionTitleDTO> {
-        return arrayOf()
+    fun readQuestionTitles(category: String, offset: Int, limit: Int): Array<QuestionTitleDTO> {
+        return qna.readQuestionTitles(category, offset, limit)
     }
 
-    fun enrollOpinion(userId: String?, questionId: String?, title: String?, contents: String?): String {
-        return "enrollOpinion"
+    fun enrollOpinion(userId: String, questionId: String, title: String, content: String): String {
+        qna.enrollOpinion(userId, questionId, title, content)
+        return "success"
     }
 
-    fun updateOpinion(userId: String?, opinionId: String?, title: String?, contents: String?): String {
-        return "updateOpinion"
+    fun updateOpinion(userId: String, opinionId: String, title: String, content: String): String {
+        qna.updateOpinion(userId, opinionId, title, content)
+        return "success"
     }
 
-    fun deleteOpinion(userId: String?, opinionId: String?): String {
-        return "deleteOpinion"
+    fun deleteOpinion(userId: String, opinionId: String): String {
+        qna.deleteOpinion(userId, opinionId)
+        return "success"
     }
 
-    fun readOpinions(questionId: String?, startNum: Int, endNum: Int): Array<OpinionDTO> {
-        return arrayOf()
+    fun readOpinions(questionId: String, offset: Int, limit: Int): Array<OpinionDTO> {
+        return qna.readOpinions(questionId, offset, limit)
     }
 
-    fun search(contents: String?, age: Int, gender: String?, personalData: String?): String {
-        return "search"
+    fun search(query: String): String {
+        val questionId = search.search(query)
+        return qna.readOpinions(questionId, 1, 1)[0].getContent()
     }
 }

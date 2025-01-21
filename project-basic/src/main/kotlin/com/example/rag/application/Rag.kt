@@ -17,8 +17,8 @@ class Rag(private val searchableQnA: SearchableQnA, private val explainer: Expla
         return searchableQnA.enrollQuestion(userId, title, category, content)
     }
 
-    override fun updateQuestion(userId: String, questionId: String, category: String, content: String): String {
-        return searchableQnA.updateQuestion(userId, questionId, category, content)
+    override fun updateQuestion(userId: String, questionId: String, title: String, category: String, content: String): String {
+        return searchableQnA.updateQuestion(userId, questionId, title, category, content)
     }
 
     override fun deleteQuestion(userId: String, questionId: String): String {
@@ -50,7 +50,7 @@ class Rag(private val searchableQnA: SearchableQnA, private val explainer: Expla
     }
 
     override fun search(query: String, age: Int, gender: String?, personalData: String?): String {
-        val content = searchableQnA.search(query, age, gender, personalData)
+        val content = searchableQnA.search(query)
         return explainer.explain(content, "나이: %d, 성별: %s, 개인정보: %s".format(age, gender, personalData))
     }
 }
