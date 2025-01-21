@@ -24,6 +24,10 @@
 - [ ] Spring ApplicationEvent 활용 
 - [ ] 이벤트 브로커 활용
 
+### DB 
+- [ ] JPA QueryDSL
+- [ ] MongoDB QueryDSL
+
 ### 처리량 향상 
 - [ ] Blocking Queue로 처리량 향상
 - [ ] 이벤트 브로커로 처리량 향상
