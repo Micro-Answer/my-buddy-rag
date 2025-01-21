@@ -4,7 +4,6 @@ import core.qna.QnaSystem
 import core.rag.Opinion
 import core.rag.Question
 import core.rag.QuestionTitle
-import core.rag.QuestionTitleDTO
 import core.search.SearchSystem
 import org.springframework.stereotype.Component
 
@@ -15,8 +14,8 @@ class SearchableQnA(private val qna: QnaSystem, private val search: SearchSystem
     }
 
     fun enrollQuestion(userId: String, title: String, category: String, content: String): String {
-        val questionId = qna.enrollQuestion(userId, title, category, content)
-        search.enrollQuestion(questionId, title, category, content)
+        val questionId = qna.enrollQuestion(userId, title, category, content).questionId
+        search.enrollQuestion(questionId!!, title, category, content)
         return "success"
     }
 
@@ -36,7 +35,7 @@ class SearchableQnA(private val qna: QnaSystem, private val search: SearchSystem
         return qna.readQuestion(questionId)
     }
 
-    fun readQuestionTitles(category: String, offset: Int, limit: Int): Array<QuestionTitle> {
+    fun readQuestionTitles(category: String, offset: Int, limit: Int): List<QuestionTitle> {
         return qna.readQuestionTitles(category, offset, limit)
     }
 
@@ -55,7 +54,7 @@ class SearchableQnA(private val qna: QnaSystem, private val search: SearchSystem
         return "success"
     }
 
-    fun readOpinions(questionId: String, offset: Int, limit: Int): Array<Opinion> {
+    fun readOpinions(questionId: String, offset: Int, limit: Int): List<Opinion> {
         return qna.readOpinions(questionId, offset, limit)
     }
 

@@ -29,7 +29,7 @@ class Rag(private val searchableQnA: SearchableQnA, private val explainer: Expla
         return searchableQnA.readQuestion(questionId)
     }
 
-    override fun readQuestionTitles(category: String, offset: Int, limit: Int): Array<QuestionTitle> {
+    override fun readQuestionTitles(category: String, offset: Int, limit: Int): List<QuestionTitle> {
         return searchableQnA.readQuestionTitles(category, offset, limit)
     }
 
@@ -45,7 +45,7 @@ class Rag(private val searchableQnA: SearchableQnA, private val explainer: Expla
         return searchableQnA.deleteOpinion(userId, opinionId)
     }
 
-    override fun readOpinions(questionId: String, offset: Int, limit: Int): Array<Opinion> {
+    override fun readOpinions(questionId: String, offset: Int, limit: Int): List<Opinion> {
         return searchableQnA.readOpinions(questionId, offset, limit)
     }
 

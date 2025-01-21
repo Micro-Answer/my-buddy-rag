@@ -5,7 +5,7 @@ import core.rag.Question
 import core.rag.QuestionTitle
 
 interface QnaSystem {
-    fun enrollQuestion(userId: String, title: String, category: String, content: String): Unit
+    fun enrollQuestion(userId: String, title: String, category: String, content: String): Question
     fun updateQuestion(userId: String, questionId: String, title: String, category: String, content: String): Unit
     fun deleteQuestion(userId: String, questionId: String): Unit
     fun readQuestion(questionId: String): Question

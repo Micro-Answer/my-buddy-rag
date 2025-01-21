@@ -11,7 +11,7 @@ import java.time.LocalDateTime
 
 @Component
 class Qna(private val questionPersistencePort: QuestionPersistencePort, private val opinionPersistencePort: OpinionPersistencePort): QnaSystem {
-    override fun enrollQuestion(userId: String, title: String, category: String, content: String): Unit = enroll(userId, title, category, content)
+    override fun enrollQuestion(userId: String, title: String, category: String, content: String) = enroll(userId, title, category, content)
     override fun updateQuestion(userId: String, questionId: String, title: String, category: String, content: String): Unit = update(userId, questionId, title, category, content)
     override fun deleteQuestion(userId: String, questionId: String): Unit = questionPersistencePort.deleteQuestion(questionId)
     override fun readQuestion(questionId: String): Question = questionPersistencePort.findQuestionById(questionId)
@@ -22,9 +22,14 @@ class Qna(private val questionPersistencePort: QuestionPersistencePort, private 
     override fun deleteOpinion(userId: String, opinionId: String): Unit = opinionPersistencePort.deleteOpinion(opinionId)
     override fun readOpinions(questionId: String, offset: Int, limit: Int): List<Opinion> = opinionPersistencePort.findOpinionsByQuestionId(questionId, offset, limit)
 
-    private fun enroll(userId: String, title: String, category: String, content: String): Unit =
+    private fun enroll(userId: String, title: String, category: String, content: String): Question {
+        var question: Question
         synchronized(this) {
-            questionPersistencePort.saveQuestion(Question(category, title, content, userId))
+            question = questionPersistencePort.saveQuestion(Question(category, title, content, userId))
+
         }
+        return question
+    }
+
     private fun update(userId: String, questionId: String, title: String, category: String, content: String): Unit = questionPersistencePort.updateQuestion(Question(questionId, category, title, content, userId))
 }

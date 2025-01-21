@@ -7,8 +7,14 @@ import org.springframework.stereotype.Component;
 class SearchTool implements SearchSystem {
 
     @Override
-    public String search(String title, String category, String contents) {
-        System.out.printf("제목 : %s, 카테고리 : %s, 내용 : %s . 검색했습니다\n", title, category, contents);
+    public String search(String title) {
+        System.out.printf("%s 검색했습니다\n", title);
+        return "가장 유사한 질문 아이디";
+    }
+
+    @Override
+    public String search(String query, String category) {
+        System.out.printf("검색 문장 : %s, 카테고리 : %s . 검색했습니다\n", query, category);
         return "가장 유사한 질문 아이디";
     }
 

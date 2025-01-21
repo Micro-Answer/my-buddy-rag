@@ -6,7 +6,7 @@ import com.example.rag.adapter.web.request.QuestionRequest
 import com.example.rag.adapter.web.request.QuestionUpdateRequest
 import core.rag.Opinion
 import core.rag.Question
-import core.rag.QuestionTitleDTO
+import core.rag.QuestionTitle
 import core.rag.RagSystem
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -44,7 +44,7 @@ class RagController(private val rag: RagSystem) {
 
     // 질문 타이틀 목록 조회
     @GetMapping("/questions/titles")
-    fun readQuestionTitles(@RequestParam category: String, @RequestParam offset: Int, @RequestParam limit: Int): ResponseEntity<Array<QuestionTitleDTO>> {
+    fun readQuestionTitles(@RequestParam category: String, @RequestParam offset: Int, @RequestParam limit: Int): ResponseEntity<List<QuestionTitle>> {
         return ResponseEntity.ok(rag.readQuestionTitles(category, offset, limit))
     }
 
@@ -71,7 +71,7 @@ class RagController(private val rag: RagSystem) {
 
     // 의견 목록 조회
     @GetMapping("/opinions")
-    fun readOpinions(@RequestParam questionId: String, @RequestParam offset: Int, @RequestParam limit: Int): ResponseEntity<Array<Opinion>> {
+    fun readOpinions(@RequestParam questionId: String, @RequestParam offset: Int, @RequestParam limit: Int): ResponseEntity<List<Opinion>> {
         return ResponseEntity.ok(rag.readOpinions(questionId, offset, limit))
     }
 

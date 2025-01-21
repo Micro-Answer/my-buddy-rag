@@ -1,6 +1,6 @@
 package com.example.rag.qna.domain.cache;
 
-import core.rag.QuestionTitleDTO;
+import core.rag.QuestionTitle;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -14,12 +14,12 @@ public class CategoryQuestionTitleCache {
         caches = new HashMap<>();
     }
 
-    public QuestionTitleDTO[] getRecentQuestionTitles(String category, int startNum, int endNum) {
+    public QuestionTitle[] getRecentQuestionTitles(String category, int startNum, int endNum) {
         caches.computeIfAbsent(category, k -> new QuestionTitleCache(1000));
         return caches.get(category).getRecentQuestionTitles(startNum, endNum);
     }
 
-    public void putRecentQuestionTitle(String category, QuestionTitleDTO questionTitle) {
+    public void putRecentQuestionTitle(String category, QuestionTitle questionTitle) {
         caches.computeIfAbsent(category, k -> new QuestionTitleCache(1000));
         caches.get(category).putRecentQuestionTitle(questionTitle);
     }
