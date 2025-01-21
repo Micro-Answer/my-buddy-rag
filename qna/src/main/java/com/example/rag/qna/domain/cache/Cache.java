@@ -1,7 +1,7 @@
 package com.example.rag.qna.domain.cache;
 
 import core.qna.CacheSystem;
-import core.rag.QuestionDTO;
+import core.rag.Question;
 import core.rag.QuestionTitleDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -23,12 +23,12 @@ class Cache implements CacheSystem {
     }
 
     @Override
-    public QuestionDTO getRecentQuestion(String questionId) {
+    public Question getRecentQuestion(String questionId) {
         return questionCache.getRecentQuestion(questionId);
     }
 
     @Override
-    public void putRecentQuestion(String questionId, QuestionDTO question) {
+    public void putRecentQuestion(String questionId, Question question) {
         questionCache.putQuestion(questionId, question);
     }
 }

@@ -5,7 +5,7 @@ import com.example.rag.adapter.web.request.OpinionUpdateRequest
 import com.example.rag.adapter.web.request.QuestionRequest
 import com.example.rag.adapter.web.request.QuestionUpdateRequest
 import core.rag.Opinion
-import core.rag.QuestionDTO
+import core.rag.Question
 import core.rag.QuestionTitleDTO
 import core.rag.RagSystem
 import org.springframework.http.ResponseEntity
@@ -38,7 +38,7 @@ class RagController(private val rag: RagSystem) {
 
     // 질문 조회
     @GetMapping("/questions/{questionId}")
-    fun readQuestion(@PathVariable questionId: String): ResponseEntity<QuestionDTO> {
+    fun readQuestion(@PathVariable questionId: String): ResponseEntity<Question> {
         return ResponseEntity.ok(rag.readQuestion(questionId))
     }
 

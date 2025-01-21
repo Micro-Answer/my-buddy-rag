@@ -4,7 +4,7 @@ import com.example.rag.qna.adapter.output.opinion.OpinionPersistencePort;
 import com.example.rag.qna.adapter.output.question.QuestionPersistencePort;
 import core.qna.QnaSystem;
 import core.rag.Opinion;
-import core.rag.QuestionDTO;
+import core.rag.Question;
 import core.rag.QuestionTitleDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -40,7 +40,7 @@ class Qna implements QnaSystem {
     }
 
     @Override
-    public QuestionDTO readQuestion(String questionId) {
+    public Question readQuestion(String questionId) {
         return new Question("userId", "questionId", "title", "category", "contents", LocalDateTime.now(), LocalDateTime.now());
 
     }

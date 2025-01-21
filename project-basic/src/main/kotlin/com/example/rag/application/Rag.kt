@@ -2,7 +2,7 @@ package com.example.rag.application
 
 import core.explanation.ExplainerSystem
 import core.rag.Opinion
-import core.rag.QuestionDTO
+import core.rag.Question
 import core.rag.QuestionTitleDTO
 import core.rag.RagSystem
 import org.springframework.stereotype.Component
@@ -25,7 +25,7 @@ class Rag(private val searchableQnA: SearchableQnA, private val explainer: Expla
         return searchableQnA.deleteQuestion(userId, questionId)
     }
 
-    override fun readQuestion(questionId: String): QuestionDTO {
+    override fun readQuestion(questionId: String): Question {
         return searchableQnA.readQuestion(questionId)
     }
 

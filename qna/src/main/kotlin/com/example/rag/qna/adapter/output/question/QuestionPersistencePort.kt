@@ -1,6 +1,6 @@
 package com.example.rag.qna.adapter.output.question
 
-import com.example.rag.qna.domain.Question
+import core.rag.Question
 
 interface QuestionPersistencePort {
     fun saveQuestion(domain: Question): Question

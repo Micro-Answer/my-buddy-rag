@@ -2,7 +2,7 @@ package com.example.rag.application
 
 import core.qna.QnaSystem
 import core.rag.Opinion
-import core.rag.QuestionDTO
+import core.rag.Question
 import core.rag.QuestionTitleDTO
 import core.search.SearchSystem
 import org.springframework.stereotype.Component
@@ -31,7 +31,7 @@ class SearchableQnA(private val qna: QnaSystem, private val search: SearchSystem
         return "success"
     }
 
-    fun readQuestion(questionId: String): QuestionDTO {
+    fun readQuestion(questionId: String): Question {
         return qna.readQuestion(questionId)
     }
 

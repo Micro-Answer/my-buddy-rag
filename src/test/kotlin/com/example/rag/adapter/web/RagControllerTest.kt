@@ -5,7 +5,7 @@ import com.example.rag.adapter.web.request.OpinionUpdateRequest
 import com.example.rag.adapter.web.request.QuestionRequest
 import com.example.rag.adapter.web.request.QuestionUpdateRequest
 import core.rag.RagSystem
-import core.rag.QuestionDTO
+import core.rag.Question
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -81,14 +81,14 @@ class RagControllerTest {
     fun getQuestion() {
         // Given
         val questionId = "questionId1"
-        val mockQuestionDTO = mock(QuestionDTO::class.java)
-        `when`(mockQuestionDTO.userId()).thenReturn("user1")
-        `when`(mockQuestionDTO.questionId()).thenReturn(questionId)
-        `when`(mockQuestionDTO.title()).thenReturn("질문 제목")
-        `when`(mockQuestionDTO.category()).thenReturn("카테고리1")
-        `when`(mockQuestionDTO.contents()).thenReturn("질문 내용")
-        `when`(mockQuestionDTO.createdDate()).thenReturn("2025-01-18")
-        `when`(ragSystem.readQuestion(eq(questionId))).thenReturn(mockQuestionDTO)
+        val mockQuestion = mock(Question::class.java)
+        `when`(mockQuestion.userId()).thenReturn("user1")
+        `when`(mockQuestion.questionId()).thenReturn(questionId)
+        `when`(mockQuestion.title()).thenReturn("질문 제목")
+        `when`(mockQuestion.category()).thenReturn("카테고리1")
+        `when`(mockQuestion.contents()).thenReturn("질문 내용")
+        `when`(mockQuestion.createdDate()).thenReturn("2025-01-18")
+        `when`(ragSystem.readQuestion(eq(questionId))).thenReturn(mockQuestion)
 
         // When
         val response = ragController.readQuestion(questionId)
