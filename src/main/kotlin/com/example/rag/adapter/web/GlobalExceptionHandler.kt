@@ -3,6 +3,8 @@ package com.example.rag.adapter.web
 import core.exception.ResourceNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.FieldError
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -19,6 +21,12 @@ class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     fun handleNotFound(ex: ResourceNotFoundException): ResponseEntity<String> =
         ResponseEntity.status(HttpStatus.NOT_FOUND).body("리소스를 찾을 수 없습니다: ${ex.message}")
+
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    fun handleValidationExceptions(ex: MethodArgumentNotValidException): ResponseEntity<List<String>> {
+        val errors = ex.bindingResult.allErrors.map { (it as FieldError).defaultMessage ?: "입력 유효성 검증에 실패했습니다: ${ex.message}" }
+        return ResponseEntity(errors, HttpStatus.BAD_REQUEST)
+    }
 
     // 모든 예외 처리
     @ExceptionHandler(Exception::class)

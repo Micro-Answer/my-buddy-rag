@@ -8,13 +8,14 @@ import core.rag.RagSystem
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import jakarta.validation.Valid
 
 @RestController
 @RequestMapping("/v1/api/rag")
 class RagController(private val rag: RagSystem) {
 
     @PostMapping("/questions")
-    fun enrollQuestion(@RequestBody request: QuestionRequest): ResponseEntity<String> {
+    fun enrollQuestion(@RequestBody @Valid request: QuestionRequest): ResponseEntity<String> {
         val (userId, title, category, content) = request.cleanData()
         rag.enrollQuestion(userId, title, category, content)
         return ResponseEntity.status(HttpStatus.CREATED).body("$title 등록 성공!")
@@ -23,7 +24,7 @@ class RagController(private val rag: RagSystem) {
     @PutMapping("/questions/{questionId}")
     fun updateQuestion(
         @PathVariable questionId: String,
-        @RequestBody request: QuestionUpdateRequest
+        @RequestBody @Valid request: QuestionUpdateRequest
     ): ResponseEntity<String> {
         val (userId, category, title, content) = request.cleanData()
         rag.updateQuestion(userId, questionId, title, category, content)
@@ -52,7 +53,7 @@ class RagController(private val rag: RagSystem) {
         ResponseEntity.ok(rag.readQuestionTitles(category.cleanHtml(), offset, limit))
 
     @PostMapping("/opinions")
-    fun enrollOpinion(@RequestBody request: OpinionRequest): ResponseEntity<String> {
+    fun enrollOpinion(@RequestBody @Valid request: OpinionRequest): ResponseEntity<String> {
         val (userId, questionId, title, content) = request.cleanData()
         rag.enrollOpinion(userId, questionId, title, content)
         return ResponseEntity.status(HttpStatus.CREATED).body("$title 등록 성공!")
@@ -61,7 +62,7 @@ class RagController(private val rag: RagSystem) {
     @PutMapping("/opinions/{opinionId}")
     fun updateOpinion(
         @PathVariable opinionId: String,
-        @RequestBody request: OpinionUpdateRequest
+        @RequestBody @Valid request: OpinionUpdateRequest
     ): ResponseEntity<String> {
         val (userId, title, content) = request.cleanData()
         rag.updateOpinion(userId, opinionId, title, content)
