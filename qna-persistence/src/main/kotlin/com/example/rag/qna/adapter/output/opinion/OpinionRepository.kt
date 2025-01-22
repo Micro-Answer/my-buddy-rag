@@ -1,6 +1,5 @@
 package com.example.rag.qna.adapter.output.opinion
 
-import com.example.rag.qna.adapter.output.opinion.OpinionEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository

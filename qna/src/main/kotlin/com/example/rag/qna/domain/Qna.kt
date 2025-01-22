@@ -42,7 +42,7 @@ class Qna(private val questionPersistence: QuestionPersistencePort, private val 
     }
 
     override fun deleteOpinion(userId: String, opinionId: String) {
-        opinionPersistence.deleteOpinion(opinionId)
+        opinionPersistence.deleteOpinionById(opinionId)
     }
 
     override fun readOpinions(questionId: String, offset: Int, limit: Int): List<Opinion>
