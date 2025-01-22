@@ -7,29 +7,44 @@ import core.rag.Opinion
 import core.rag.Question
 import core.rag.QuestionTitle
 import org.springframework.stereotype.Component
-import java.time.LocalDateTime
 
 @Component
-class Qna(private val questionPersistencePort: QuestionPersistencePort, private val opinionPersistencePort: OpinionPersistencePort): QnaSystem {
-    override fun enrollQuestion(userId: String, title: String, category: String, content: String) = enroll(userId, title, category, content)
-    override fun updateQuestion(userId: String, questionId: String, title: String, category: String, content: String): Unit = update(userId, questionId, title, category, content)
-    override fun deleteQuestion(userId: String, questionId: String): Unit = questionPersistencePort.deleteQuestion(questionId)
-    override fun readQuestion(questionId: String): Question = questionPersistencePort.findQuestionById(questionId)
-    // 논리 오류 수정 대상 
-    override fun readQuestionTitles(category: String, offset: Int, limit: Int): List<QuestionTitle> = questionPersistencePort.findQuestionsByUserId(category, offset, limit).map { question -> QuestionTitle(question.questionId ?: "", question.title, question.userId, question.createdAt ?: LocalDateTime.now()) }
-    override fun enrollOpinion(userId: String, questionId: String, title: String, content: String): Unit = opinionPersistencePort.saveOpinion(Opinion(questionId, title, content, userId))
-    override fun updateOpinion(userId: String, opinionId: String, title: String, content: String): Unit = opinionPersistencePort.updateOpinion(Opinion("questionId", title, content, userId, opinionId))
-    override fun deleteOpinion(userId: String, opinionId: String): Unit = opinionPersistencePort.deleteOpinion(opinionId)
-    override fun readOpinions(questionId: String, offset: Int, limit: Int): List<Opinion> = opinionPersistencePort.findOpinionsByQuestionId(questionId, offset, limit)
+class Qna(private val questionPersistence: QuestionPersistencePort, private val opinionPersistence: OpinionPersistencePort): QnaSystem {
 
-    private fun enroll(userId: String, title: String, category: String, content: String): Question {
-        var question: Question
-        synchronized(this) {
-            question = questionPersistencePort.saveQuestion(Question(category, title, content, userId))
-
+    override fun enrollQuestion(userId: String, title: String, category: String, content: String)
+        = questionPersistence.saveQuestion( Question(category, title, content, userId) ).also {
+            // 캐시 등록
         }
-        return question
+
+    override fun updateQuestion(userId: String, questionId: String, title: String, category: String, content: String) {
+        questionPersistence.updateQuestion( Question(questionId, category, title, content, userId) )
     }
 
-    private fun update(userId: String, questionId: String, title: String, category: String, content: String): Unit = questionPersistencePort.updateQuestion(Question(questionId, category, title, content, userId))
+    override fun deleteQuestion(userId: String, questionId: String) {
+        questionPersistence.deleteQuestion(questionId)
+    }
+
+    override fun readQuestion(questionId: String): Question
+        = questionPersistence.findQuestionById(questionId)
+
+    // 논리 오류 수정 대상
+    override fun readQuestionTitles(category: String, offset: Int, limit: Int): List<QuestionTitle>
+        = questionPersistence.findQuestionsByUserId(category, offset, limit)
+            .filter { !it.questionId.isNullOrBlank() }
+            .map { QuestionTitle(it.questionId!!, it.title, it.userId, it.createdAt!!) }
+
+    override fun enrollOpinion(userId: String, questionId: String, title: String, content: String) {
+        opinionPersistence.saveOpinion( Opinion(questionId, title, content, userId) )
+    }
+
+    override fun updateOpinion(userId: String, opinionId: String, title: String, content: String) {
+        opinionPersistence.updateOpinion( Opinion("questionId", title, content, userId, opinionId) )
+    }
+
+    override fun deleteOpinion(userId: String, opinionId: String) {
+        opinionPersistence.deleteOpinion(opinionId)
+    }
+
+    override fun readOpinions(questionId: String, offset: Int, limit: Int): List<Opinion>
+        = opinionPersistence.findOpinionsByQuestionId(questionId, offset, limit)
 }
