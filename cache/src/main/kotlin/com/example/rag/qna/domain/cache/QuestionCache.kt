@@ -6,19 +6,20 @@ import org.springframework.stereotype.Component
 @Component
 class QuestionCache {
     private val maxSize = 1000
-    private val map: MutableMap<String, Question> = LinkedHashMap(maxSize, 0.75f, true)
+    private val cache: MutableMap<String, Question> = LinkedHashMap(maxSize, 0.75f, true)
 
-    fun getRecentQuestion(questionId: String): Question? {
-        return map[questionId]
-    }
+    fun getRecentQuestion(questionId: String): Question?
+        = cache[questionId]
 
-    //  FIFO 구조
     fun putQuestion(questionId: String, question: Question) {
-        // 비효율 - 개선 사항
-        if (map.size >= maxSize) {
-            val oldestKey = map.keys.iterator().next()
-            map.remove(oldestKey)
-        }
-        map[questionId] = question
+        cache.trim(maxSize, (maxSize * 0.8F).toInt())
+        cache[questionId] = question
+    }
+}
+
+private fun MutableMap<String, Question>.trim(maxSize: Int, targetSize: Int) {
+    if (this.size >= maxSize) {
+        this.keys.take(this.size - targetSize)
+            .forEach { this.remove(it) }
     }
 }

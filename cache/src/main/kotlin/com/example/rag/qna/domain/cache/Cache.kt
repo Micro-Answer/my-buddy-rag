@@ -8,9 +8,8 @@ import org.springframework.stereotype.Component
 @Component
 class Cache(private val questionTitleCache: CategoryQuestionTitleCache, private val questionCache: QuestionCache): CacheSystem {
 
-    override fun getRecentQuestionTitles(category: String, offset: Int, limit: Int): Array<QuestionTitle?>? {
-        return questionTitleCache.getRecentQuestionTitles(category, offset, limit)
-    }
+    override fun getRecentQuestionTitles(category: String, offset: Int, limit: Int): List<QuestionTitle?>
+        = questionTitleCache.getRecentQuestionTitles(category, offset, limit)
 
     override fun putRecentQuestionTitle(category: String, questionTitle: QuestionTitle) {
         questionTitleCache.putRecentQuestionTitle(category, questionTitle)
