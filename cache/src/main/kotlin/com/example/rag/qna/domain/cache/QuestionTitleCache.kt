@@ -11,8 +11,7 @@ class QuestionTitleCache {
     // 수정 삭제 대비 일정 주기마다 최신화
     @Synchronized
     fun getRecentQuestionTitles(offset: Int, limit: Int): List<QuestionTitle?> =
-        (0 until limit)
-            .map { i -> cache[(first + offset + i) % cache.size] }
+        (0 until limit).map { i -> cache[(first + offset + i) % cache.size] }
             .takeWhile { it != null }
 
     @Synchronized
