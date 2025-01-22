@@ -31,6 +31,10 @@
 - [ ] JPA QueryDSL
 - [ ] MongoDB QueryDSL
 
+### 성능 측정 
+- [ ] Execution Time, Cpu Time, Memory Usage 측정
+- [ ] k6로 성공 비율 측정 
+
 ### 처리량 향상 
 - [ ] Blocking Queue로 처리량 향상
 - [ ] 이벤트 브로커로 처리량 향상
