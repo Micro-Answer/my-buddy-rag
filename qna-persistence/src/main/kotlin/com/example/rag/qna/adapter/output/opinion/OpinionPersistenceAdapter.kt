@@ -10,7 +10,7 @@ private fun Opinion.createEntity() = OpinionEntity(questionId, title, content, u
 
 private fun OpinionEntity.toDomainModel() = Opinion(questionId, title, content, userId, idForTransparency(id), createdAt, updatedAt)
 
-private fun OpinionEntity.updateWithDomain(domain: Opinion) {
+private infix fun OpinionEntity.updateWith(domain: Opinion) {
     title = domain.title
     content = domain.content
     updatedAt = LocalDateTime.now()
@@ -24,7 +24,7 @@ class OpinionPersistenceAdapter(private val opinionRepository: OpinionRepository
     }
 
     override fun updateOpinion(domain: Opinion) {
-        getOpinionEntity(domain.questionId).updateWithDomain(domain)
+        getOpinionEntity(domain.questionId) updateWith domain
     }
 
     override fun deleteOpinionById(opinionId: String) {
