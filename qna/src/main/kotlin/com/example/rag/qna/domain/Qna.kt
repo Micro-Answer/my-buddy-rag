@@ -30,8 +30,8 @@ class Qna(private val questionPersistence: QuestionPersistencePort, private val 
     // 논리 오류 수정 대상
     override fun readQuestionTitles(category: String, offset: Int, limit: Int): List<QuestionTitle>
         = questionPersistence.findQuestionsByUserId(category, offset, limit)
-            .filter { !it.questionId.isNullOrBlank() }
-            .map { QuestionTitle(it.questionId!!, it.title, it.userId, it.createdAt!!) }
+                             .filter { !it.questionId.isNullOrBlank() }
+                             .map { QuestionTitle(it.questionId!!, it.title, it.userId, it.createdAt!!) }
 
     override fun enrollOpinion(userId: String, questionId: String, title: String, content: String) {
         opinionPersistence.saveOpinion( Opinion(questionId, title, content, userId) )
