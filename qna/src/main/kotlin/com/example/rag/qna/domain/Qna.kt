@@ -19,7 +19,7 @@ class Qna(private val questionPersistence: QuestionPersistencePort, private val 
         }
 
     override fun updateQuestion(userId: String, questionId: String, title: String, category: String, content: String) {
-        questionPersistence.updateQuestion(Question(questionId, category, title, content, userId))
+        questionPersistence.updateQuestion(Question(category, title, content, userId, questionId))
     }
 
     override fun deleteQuestion(userId: String, questionId: String) {

@@ -10,7 +10,7 @@ data class OpinionRequest(
     val userId: String,
 
     @field:NotNull(message = "Question ID cannot be null")
-    @field:Size(min = 5, max = 100, message = "Question ID size must be between 5 and 100 characters")
+    @field:Size(min = 1, max = 1_000_000, message = "Question ID size must be between 1 and 1_000_000 characters")
     val questionId: String,
 
     @field:NotNull(message = "Title cannot be null")
