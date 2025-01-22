@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.*
 class RagController(private val rag: RagSystem) {
 
     @PostMapping("/questions")
-    fun enrollQuestion(
-        @RequestBody request: QuestionRequest
-    ): ResponseEntity<String> {
+    fun enrollQuestion(@RequestBody request: QuestionRequest): ResponseEntity<String> {
         val (userId, title, category, content) = request.cleanData()
         rag.enrollQuestion(userId, title, category, content)
         return ResponseEntity.status(HttpStatus.CREATED).body("$title 등록 성공!")
@@ -54,9 +52,7 @@ class RagController(private val rag: RagSystem) {
         ResponseEntity.ok(rag.readQuestionTitles(category.cleanHtml(), offset, limit))
 
     @PostMapping("/opinions")
-    fun enrollOpinion(
-        @RequestBody request: OpinionRequest
-    ): ResponseEntity<String> {
+    fun enrollOpinion(@RequestBody request: OpinionRequest): ResponseEntity<String> {
         val (userId, questionId, title, content) = request.cleanData()
         rag.enrollOpinion(userId, questionId, title, content)
         return ResponseEntity.status(HttpStatus.CREATED).body("$title 등록 성공!")
@@ -87,14 +83,15 @@ class RagController(private val rag: RagSystem) {
         @RequestParam offset: Int,
         @RequestParam limit: Int
     ): ResponseEntity<List<Opinion>> =
-        ResponseEntity.ok( rag.readOpinions(questionId.cleanHtml(), offset, limit) )
+        ResponseEntity.ok(rag.readOpinions(questionId.cleanHtml(), offset, limit))
 
     // 맞춤형 해설 질의응답 검색
     @GetMapping("/search")
     fun search(
-        @RequestParam query: String, @RequestParam age: Int,
+        @RequestParam query: String,
+        @RequestParam age: Int,
         @RequestParam(required = false) gender: String?,
         @RequestParam(required = false) personalData: String?
     ): ResponseEntity<String> =
-        ResponseEntity.ok( rag.search(query.cleanHtml(), age, gender?.cleanHtml(), personalData?.cleanHtml()) )
+        ResponseEntity.ok(rag.search(query.cleanHtml(), age, gender?.cleanHtml(), personalData?.cleanHtml()))
 }

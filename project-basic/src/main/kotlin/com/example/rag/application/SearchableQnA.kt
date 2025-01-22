@@ -29,11 +29,11 @@ class SearchableQnA(private val qna: QnaSystem, private val search: SearchSystem
         search.deleteQuestion(questionId)
     }
 
-    fun readQuestion(questionId: String): Question
-        = qna.readQuestion(questionId)
+    fun readQuestion(questionId: String): Question =
+        qna.readQuestion(questionId)
 
-    fun readQuestionTitles(category: String, offset: Int, limit: Int): List<QuestionTitle>
-        = qna.readQuestionTitles(category, offset, limit)
+    fun readQuestionTitles(category: String, offset: Int, limit: Int): List<QuestionTitle> =
+        qna.readQuestionTitles(category, offset, limit)
 
     fun enrollOpinion(userId: String, questionId: String, title: String, content: String) {
         qna.enrollOpinion(userId, questionId, title, content)
@@ -47,11 +47,11 @@ class SearchableQnA(private val qna: QnaSystem, private val search: SearchSystem
         qna.deleteOpinion(userId, opinionId)
     }
 
-    fun readOpinions(questionId: String, offset: Int, limit: Int): List<Opinion>
-        = qna.readOpinions(questionId, offset, limit)
+    fun readOpinions(questionId: String, offset: Int, limit: Int): List<Opinion> =
+        qna.readOpinions(questionId, offset, limit)
 
-    fun search(query: String): String
-        = search.search(query).let {
+    fun search(query: String): String =
+        search.search(query).let {
             qna.readOpinions(it, 0, 1)[0].content
         }
 }

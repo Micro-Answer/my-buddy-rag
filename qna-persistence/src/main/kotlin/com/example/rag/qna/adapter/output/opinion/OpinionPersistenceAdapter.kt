@@ -6,9 +6,11 @@ import core.rag.Opinion
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
-private fun Opinion.createEntity() = OpinionEntity(questionId, title, content, userId, LocalDateTime.now())
+private fun Opinion.createEntity() =
+    OpinionEntity(questionId, title, content, userId, LocalDateTime.now())
 
-private fun OpinionEntity.toDomainModel() = Opinion(questionId, title, content, userId, idForTransparency(id), createdAt, updatedAt)
+private fun OpinionEntity.toDomainModel() =
+    Opinion(questionId, title, content, userId, idForTransparency(id), createdAt, updatedAt)
 
 private infix fun OpinionEntity.updateWith(domain: Opinion) {
     title = domain.title
@@ -20,7 +22,7 @@ private infix fun OpinionEntity.updateWith(domain: Opinion) {
 class OpinionPersistenceAdapter(private val opinionRepository: OpinionRepository) : OpinionPersistencePort {
 
     override fun saveOpinion(domain: Opinion) {
-        opinionRepository.save( domain.createEntity() )
+        opinionRepository.save(domain.createEntity())
     }
 
     override fun updateOpinion(domain: Opinion) {
@@ -28,17 +30,17 @@ class OpinionPersistenceAdapter(private val opinionRepository: OpinionRepository
     }
 
     override fun deleteOpinionById(opinionId: String) {
-        opinionRepository.deleteById( idForMySQL(opinionId) )
+        opinionRepository.deleteById(idForMySQL(opinionId))
     }
 
-    override fun findOpinionById(opinionId: String): Opinion
-        = getOpinionEntity(opinionId).toDomainModel()
+    override fun findOpinionById(opinionId: String): Opinion =
+        getOpinionEntity(opinionId).toDomainModel()
 
-    override fun findOpinionsByQuestionId(questionId: String, offset: Int, limit: Int): List<Opinion>
-        = opinionRepository.findByQuestionId(questionId, offset, limit)
-                           .map { it.toDomainModel() }
+    override fun findOpinionsByQuestionId(questionId: String, offset: Int, limit: Int): List<Opinion> =
+        opinionRepository.findByQuestionId(questionId, offset, limit)
+            .map { it.toDomainModel() }
 
-    private fun getOpinionEntity(opinionId: String?): OpinionEntity
-        = opinionRepository.findById( idForMySQL(opinionId) )
-                           .orElseThrow()
+    private fun getOpinionEntity(opinionId: String?): OpinionEntity =
+        opinionRepository.findById(idForMySQL(opinionId))
+            .orElseThrow()
 }

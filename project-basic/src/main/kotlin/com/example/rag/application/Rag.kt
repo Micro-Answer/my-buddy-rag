@@ -25,11 +25,11 @@ class Rag(private val searchableQnA: SearchableQnA, private val explainer: Expla
         searchableQnA.deleteQuestion(userId, questionId)
     }
 
-    override fun readQuestion(questionId: String): Question
-        = searchableQnA.readQuestion(questionId)
+    override fun readQuestion(questionId: String): Question =
+        searchableQnA.readQuestion(questionId)
 
-    override fun readQuestionTitles(category: String, offset: Int, limit: Int): List<QuestionTitle>
-        = searchableQnA.readQuestionTitles(category, offset, limit)
+    override fun readQuestionTitles(category: String, offset: Int, limit: Int): List<QuestionTitle> =
+        searchableQnA.readQuestionTitles(category, offset, limit)
 
     override fun enrollOpinion(userId: String, questionId: String, title: String, content: String) {
         searchableQnA.enrollOpinion(userId, questionId, title, content)
@@ -43,11 +43,11 @@ class Rag(private val searchableQnA: SearchableQnA, private val explainer: Expla
         searchableQnA.deleteOpinion(userId, opinionId)
     }
 
-    override fun readOpinions(questionId: String, offset: Int, limit: Int): List<Opinion>
-        = searchableQnA.readOpinions(questionId, offset, limit)
+    override fun readOpinions(questionId: String, offset: Int, limit: Int): List<Opinion> =
+        searchableQnA.readOpinions(questionId, offset, limit)
 
-    override fun search(query: String, age: Int, gender: String?, personalData: String?): String
-         = searchableQnA.search(query).let {
+    override fun search(query: String, age: Int, gender: String?, personalData: String?): String =
+        searchableQnA.search(query).let {
             explainer.explain(it, "나이: %d, 성별: %s, 개인정보: %s".format(age, gender, personalData))
         }
 }
