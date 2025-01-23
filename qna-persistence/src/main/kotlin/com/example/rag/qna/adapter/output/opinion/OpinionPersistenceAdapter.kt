@@ -27,7 +27,9 @@ class OpinionPersistenceAdapter(private val opinionRepository: OpinionRepository
     }
 
     override fun updateOpinion(domain: Opinion) {
-        getOpinionEntity(domain.opinionId) updateWith domain
+        val opinionEntity = getOpinionEntity(domain.opinionId)
+        opinionEntity updateWith domain
+        opinionRepository.save(opinionEntity)
     }
 
     override fun deleteOpinionById(opinionId: String) {

@@ -28,7 +28,9 @@ class QuestionPersistenceAdapter(private val questionRepository: QuestionReposit
             .toDomainModel()
 
     override fun updateQuestion(domain: Question) {
-        getQuestionEntity(domain.questionId) updateWith domain
+        val questionEntity = getQuestionEntity(domain.questionId)
+        questionEntity updateWith domain
+        questionRepository.save(questionEntity)
     }
 
     override fun deleteQuestion(questionId: String) {
