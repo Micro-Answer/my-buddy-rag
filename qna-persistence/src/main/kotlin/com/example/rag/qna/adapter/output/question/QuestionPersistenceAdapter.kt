@@ -43,12 +43,9 @@ class QuestionPersistenceAdapter(private val questionRepository: QuestionReposit
             .content.map { it.toDomainModel() }
 
     override fun findQuestionsByUserId(userId: String, offset: Int, limit: Int): List<Question> =
-        getQuestions(userId, offset, limit)
+        questionRepository.findByUserId(userId, PageRequest.of(offset, limit))
+            .content.map { it.toDomainModel() }
 
     private fun getQuestionEntity(questionId: String?): QuestionEntity =
         questionRepository.findById(idForMySQL(questionId)).orElseThrow()
-
-    private fun getQuestions(userId: String, offset: Int, limit: Int): List<Question> =
-        questionRepository.findByUserId(userId, PageRequest.of(offset, limit))
-            .content.map { it.toDomainModel() }
 }
