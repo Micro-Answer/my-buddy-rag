@@ -9,6 +9,10 @@ import java.time.LocalDateTime
 
 @Repository
 interface QuestionRepository: JpaRepository<QuestionEntity, Long> {
+
+    @Query("SELECT q FROM QuestionEntity q WHERE q.category = :category ORDER BY q.createdAt DESC")
+    fun findByCategory(category: String, pageable: Pageable): Page<QuestionEntity>
+
     @Query("SELECT q FROM QuestionEntity q WHERE q.userId = :userId ORDER BY q.createdAt DESC")
     fun findByUserId(userId: String, pageable: Pageable): Page<QuestionEntity>
 

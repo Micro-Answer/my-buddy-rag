@@ -38,6 +38,10 @@ class QuestionPersistenceAdapter(private val questionRepository: QuestionReposit
     override fun findQuestionById(questionId: String): Question =
         getQuestionEntity(questionId).toDomainModel()
 
+    override fun findQuestionsByCategory(category: String, offset: Int, limit: Int): List<Question> =
+        questionRepository.findByCategory(category, PageRequest.of(offset, limit))
+            .content.map { it.toDomainModel() }
+
     override fun findQuestionsByUserId(userId: String, offset: Int, limit: Int): List<Question> =
         getQuestions(userId, offset, limit)
 
