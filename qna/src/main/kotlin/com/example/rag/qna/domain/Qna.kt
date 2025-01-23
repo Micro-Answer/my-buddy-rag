@@ -40,7 +40,7 @@ class Qna(private val questionPersistence: QuestionPersistencePort, private val 
     }
 
     override fun updateOpinion(userId: String, opinionId: String, title: String, content: String) {
-        opinionPersistence.updateOpinion(Opinion("questionId", title, content, userId, opinionId))
+        opinionPersistence.updateOpinion(Opinion("not used", title, content, userId, opinionId))
     }
 
     override fun deleteOpinion(userId: String, opinionId: String) {
