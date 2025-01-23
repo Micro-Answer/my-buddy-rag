@@ -3,6 +3,7 @@ package com.example.rag.qna.adapter.output.question
 import com.example.rag.qna.adapter.output.DBTransparency.idForMySQL
 import com.example.rag.qna.adapter.output.DBTransparency.idForTransparency
 import core.rag.Question
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
@@ -45,6 +46,6 @@ class QuestionPersistenceAdapter(private val questionRepository: QuestionReposit
             .orElseThrow()
 
     private fun getQuestions(userId: String, offset: Int, limit: Int): List<Question> =
-        questionRepository.findByUserId(userId, offset, limit)
-            .map { it.toDomainModel() }
+        questionRepository.findByUserId(userId, PageRequest.of(offset, limit))
+            .content.map { it.toDomainModel() }
 }

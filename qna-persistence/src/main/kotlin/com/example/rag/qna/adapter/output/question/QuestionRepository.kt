@@ -1,5 +1,7 @@
 package com.example.rag.qna.adapter.output.question
 
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
@@ -8,7 +10,7 @@ import java.time.LocalDateTime
 @Repository
 interface QuestionRepository: JpaRepository<QuestionEntity, Long> {
     @Query("SELECT q FROM QuestionEntity q WHERE q.userId = :userId ORDER BY q.createdAt DESC")
-    fun findByUserId(userId: String, offset: Int, limit: Int): List<QuestionEntity>
+    fun findByUserId(userId: String, pageable: Pageable): Page<QuestionEntity>
 
     /**
      * 사용자 ID로 질문 목록 조회 (최신순 정렬)
