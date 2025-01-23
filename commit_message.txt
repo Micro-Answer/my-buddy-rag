@@ -1,0 +1,11 @@
+[ git commit message 태그 작성 ]
+
+chore: 도구나 환경 설정 수정
+feat: 기능 추가
+style: 코드 스타일 수정
+refactor: 기능 수정 없이 유지보수 목적으로 설계 개선
+perf: 성능 향상을 위한 코드 개선
+fix: 버그 수정
+test: 테스트
+ci: CI/CD 설정 수정
+docs: 문서 작성
