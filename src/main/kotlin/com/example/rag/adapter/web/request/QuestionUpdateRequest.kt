@@ -10,7 +10,7 @@ data class QuestionUpdateRequest(
     val userId: String,
 
     @field:NotNull(message = "Category cannot be null")
-    @field:Size(min = 3, max = 50, message = "Category size must be between 3 and 50 characters")
+    @field:Size(min = 1, max = 50, message = "Category size must be between 1 and 50 characters")
     val category: String,
 
     @field:NotNull(message = "Title cannot be null")
