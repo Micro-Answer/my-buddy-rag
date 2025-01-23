@@ -4,7 +4,6 @@ import com.example.rag.qna.adapter.output.DBTransparency.idForMySQL
 import com.example.rag.qna.adapter.output.DBTransparency.idForTransparency
 import core.rag.Opinion
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
@@ -38,13 +37,10 @@ class OpinionPersistenceAdapter(private val opinionRepository: OpinionRepository
     override fun findOpinionById(opinionId: String): Opinion =
         getOpinionEntity(opinionId).toDomainModel()
 
-    override fun findOpinionsByQuestionId(questionId: String, offset: Int, limit: Int): List<Opinion> {
-        val pageable = PageRequest.of(offset, limit)
-        val opinionPage = opinionRepository.findByQuestionId(questionId, pageable)
-        return opinionPage.content.map { it.toDomainModel() }
-    }
+    override fun findOpinionsByQuestionId(questionId: String, offset: Int, limit: Int): List<Opinion> =
+        opinionRepository.findByQuestionId(questionId, PageRequest.of(offset, limit))
+            .content.map { it.toDomainModel() }
 
     private fun getOpinionEntity(opinionId: String?): OpinionEntity =
-        opinionRepository.findById(idForMySQL(opinionId))
-            .orElseThrow()
+        opinionRepository.findById(idForMySQL(opinionId)).orElseThrow()
 }

@@ -42,8 +42,7 @@ class QuestionPersistenceAdapter(private val questionRepository: QuestionReposit
         getQuestions(userId, offset, limit)
 
     private fun getQuestionEntity(questionId: String?): QuestionEntity =
-        questionRepository.findById(idForMySQL(questionId))
-            .orElseThrow()
+        questionRepository.findById(idForMySQL(questionId)).orElseThrow()
 
     private fun getQuestions(userId: String, offset: Int, limit: Int): List<Question> =
         questionRepository.findByUserId(userId, PageRequest.of(offset, limit))
