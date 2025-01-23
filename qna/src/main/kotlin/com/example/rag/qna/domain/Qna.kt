@@ -29,9 +29,8 @@ class Qna(private val questionPersistence: QuestionPersistencePort, private val 
     override fun readQuestion(questionId: String): Question =
         questionPersistence.findQuestionById(questionId)
 
-    // 논리 오류 수정 대상
     override fun readQuestionTitles(category: String, offset: Int, limit: Int): List<QuestionTitle> =
-        questionPersistence.findQuestionsByUserId(category, offset, limit)
+        questionPersistence.findQuestionsByCategory(category, offset, limit)
             .filter { !it.questionId.isNullOrBlank() }
             .map { QuestionTitle(it.questionId!!, it.title, it.userId, it.createdAt!!) }
 
