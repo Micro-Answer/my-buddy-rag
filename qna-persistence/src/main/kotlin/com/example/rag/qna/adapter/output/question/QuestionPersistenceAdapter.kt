@@ -11,7 +11,7 @@ private fun Question.createEntity() =
     QuestionEntity(category, title,content, userId, LocalDateTime.now())
 
 private fun QuestionEntity.toDomainModel() =
-    Question(idForTransparency(id), category, title, content, userId, createdAt, updatedAt)
+    Question(category, title, content, userId, idForTransparency(id), createdAt, updatedAt)
 
 private infix fun QuestionEntity.updateWith(domain: Question) {
     category = domain.category
