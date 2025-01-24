@@ -1,9 +1,7 @@
 package com.example.rag.qna.domain.cache
 
 import core.rag.Question
-import org.springframework.stereotype.Component
 
-@Component
 class QuestionCache {
     private val maxSize = 1000
     private val cache: MutableMap<String, Question> = LinkedHashMap(maxSize, 0.75f, true)

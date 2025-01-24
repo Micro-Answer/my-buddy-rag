@@ -1,9 +1,7 @@
 package com.example.rag.qna.domain.cache
 
 import core.rag.QuestionTitle
-import org.springframework.stereotype.Component
 
-@Component
 class CategoryQuestionTitleCache {
     private val caches: MutableMap<String, QuestionTitleCache> = HashMap()
 
