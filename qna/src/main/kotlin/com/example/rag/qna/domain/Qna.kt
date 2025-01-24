@@ -6,11 +6,8 @@ import core.qna.QnaSystem
 import core.rag.Opinion
 import core.rag.Question
 import core.rag.QuestionTitle
-import org.springframework.stereotype.Component
 
-@Component
 class Qna(private val questionPersistence: QuestionPersistencePort, private val opinionPersistence: OpinionPersistencePort): QnaSystem {
-
     override fun enrollQuestion(userId: String, title: String, category: String, content: String) =
         questionPersistence.saveQuestion(
             Question(category, title, content, userId)
