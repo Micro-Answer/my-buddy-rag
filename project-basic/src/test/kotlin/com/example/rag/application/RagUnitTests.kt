@@ -1,5 +1,6 @@
 package com.example.rag.application
 
+import core.explanation.ExplainerSystem
 import core.qna.QnaSystem
 import core.search.SearchSystem
 import org.junit.jupiter.api.BeforeEach
@@ -9,29 +10,27 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
-import org.mockito.Mockito.*
 
 @ExtendWith(MockitoExtension::class)
 class RagUnitTests {
+    @Mock
+    lateinit var qna: QnaSystem
 
     @Mock
-    lateinit var qnaSystem: QnaSystem // QnaSystem Mock 객체 생성
+    lateinit var search: SearchSystem
 
     @Mock
-    lateinit var searchSystem: SearchSystem // SearchSystem Mock 객체 생성
+    lateinit var explainer: ExplainerSystem
 
-//    @InjectMocks
-    lateinit var searchableQnA: SearchableQnA // Mock된 QnaSystem과 SearchSystem 주입
+    @InjectMocks
+    lateinit var searchableQnA: SearchableQnA
 
-//    @InjectMocks
-    lateinit var rag: Rag // Mock된 SearchableQnA 주입
+    lateinit var rag: Rag
 
 
     @BeforeEach
     fun setUp() {
-        // Mock 객체를 수동으로 초기화
-        searchableQnA = SearchableQnA(qnaSystem, searchSystem)
-        rag = Rag(searchableQnA)
+        rag = Rag(searchableQnA, explainer)
     }
 
     @Test
