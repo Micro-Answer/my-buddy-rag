@@ -1,4 +1,4 @@
-package com.example.rag.application.event.handler
+package core.rag.event.handler
 
 import core.qna.QnaSystem
 import core.rag.event.QnAEvent

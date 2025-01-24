@@ -1,6 +1,6 @@
 package com.example.rag.application
 
-import com.example.rag.application.event.handler.QnAEventHandler
+import core.rag.event.handler.QnAEventHandler
 import core.qna.QnaSystem
 import core.rag.Opinion
 import core.rag.Question
