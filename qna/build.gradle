@@ -26,6 +26,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
 
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
