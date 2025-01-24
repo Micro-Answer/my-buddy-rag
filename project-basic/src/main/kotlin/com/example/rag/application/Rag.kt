@@ -5,9 +5,7 @@ import core.rag.Opinion
 import core.rag.Question
 import core.rag.QuestionTitle
 import core.rag.RagSystem
-import org.springframework.stereotype.Component
 
-@Component
 class Rag(private val searchableQnA: SearchableQnA, private val explainer: ExplainerSystem): RagSystem {
     init {
         println("create Rag")
