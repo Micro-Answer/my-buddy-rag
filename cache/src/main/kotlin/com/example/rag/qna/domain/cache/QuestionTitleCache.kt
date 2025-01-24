@@ -2,10 +2,7 @@ package com.example.rag.qna.domain.cache
 
 import core.rag.QuestionTitle
 
-class QuestionTitleCache {
-    private var first = 0
-    private val cache: Array<QuestionTitle?> = arrayOfNulls(1000)
-
+class QuestionTitleCache(private val cache: Array<QuestionTitle?> = arrayOfNulls(1000), private var first: Int = 0) {
     // 비효율 - 개선 사항
     // synchronized 최적화 필요(성능 비교 필요)
     // 수정 삭제 대비 일정 주기마다 최신화

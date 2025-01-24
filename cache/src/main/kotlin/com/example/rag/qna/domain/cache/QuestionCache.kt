@@ -2,10 +2,10 @@ package com.example.rag.qna.domain.cache
 
 import core.rag.Question
 
-class QuestionCache {
-    private val maxSize = 1000
+class QuestionCache(
+    private val maxSize: Int = 1000,
     private val cache: MutableMap<String, Question> = LinkedHashMap(maxSize, 0.75f, true)
-
+) {
     fun getRecentQuestion(questionId: String): Question? =
         cache[questionId]
 
