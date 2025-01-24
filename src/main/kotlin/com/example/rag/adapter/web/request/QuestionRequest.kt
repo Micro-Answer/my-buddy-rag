@@ -1,6 +1,7 @@
 package com.example.rag.adapter.web.request
 
 import com.example.rag.adapter.web.cleanHtml
+import core.rag.event.QnAEvent
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 
@@ -24,3 +25,6 @@ data class QuestionRequest(
     fun cleanData(): QuestionRequest =
         QuestionRequest(userId.cleanHtml(), title.cleanHtml(), category.cleanHtml(), content.cleanHtml())
 }
+
+fun QuestionRequest.toEvent() =
+    QnAEvent.EnrollQuestion(category, title, content, userId)

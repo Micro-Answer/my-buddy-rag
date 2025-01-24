@@ -6,21 +6,22 @@ import core.qna.QnaSystem
 import core.rag.Opinion
 import core.rag.Question
 import core.rag.QuestionTitle
+import core.rag.event.QnAEvent
 
 class Qna(private val questionPersistence: QuestionPersistencePort, private val opinionPersistence: OpinionPersistencePort): QnaSystem {
-    override fun enrollQuestion(userId: String, title: String, category: String, content: String) =
-        questionPersistence.saveQuestion(
-            Question(category, title, content, userId)
-        ).also {
+    override fun enrollQuestion(event: QnAEvent.EnrollQuestion) =
+        questionPersistence.saveQuestion(event.toQuestion()).also {
             // 캐시 등록
         }
 
-    override fun updateQuestion(userId: String, questionId: String, title: String, category: String, content: String) {
-        questionPersistence.updateQuestion(Question(category, title, content, userId, questionId))
+    override fun updateQuestion(event: QnAEvent.UpdateQuestion) {
+        if (event.userId == questionPersistence.getUserIdByQuestionId(event.questionId))
+            questionPersistence.updateQuestion(event.toQuestion())
     }
 
-    override fun deleteQuestion(userId: String, questionId: String) {
-        questionPersistence.deleteQuestion(questionId)
+    override fun deleteQuestion(event: QnAEvent.DeleteQuestion) {
+        if (event.userId == questionPersistence.getUserIdByQuestionId(event.questionId))
+            questionPersistence.deleteQuestion(event.questionId)
     }
 
     override fun readQuestion(questionId: String): Question =
@@ -31,18 +32,34 @@ class Qna(private val questionPersistence: QuestionPersistencePort, private val 
             .filter { !it.questionId.isNullOrBlank() }
             .map { QuestionTitle(it.questionId!!, it.title, it.userId, it.createdAt!!) }
 
-    override fun enrollOpinion(userId: String, questionId: String, title: String, content: String) {
-        opinionPersistence.saveOpinion(Opinion(questionId, title, content, userId))
+    override fun enrollOpinion(event: QnAEvent.EnrollOpinion) {
+        opinionPersistence.saveOpinion(event.toOpinion())
     }
 
-    override fun updateOpinion(userId: String, opinionId: String, title: String, content: String) {
-        opinionPersistence.updateOpinion(Opinion("not used", title, content, userId, opinionId))
+    override fun updateOpinion(event: QnAEvent.UpdateOpinion) {
+        if (event.userId == opinionPersistence.getUserIdByOpinionId(event.opinionId))
+            opinionPersistence.updateOpinion(event.toOpinion())
     }
 
-    override fun deleteOpinion(userId: String, opinionId: String) {
-        opinionPersistence.deleteOpinionById(opinionId)
+    override fun deleteOpinion(event: QnAEvent.DeleteOpinion) {
+        if (event.userId == opinionPersistence.getUserIdByOpinionId(event.opinionId))
+            opinionPersistence.deleteOpinionById(event.opinionId)
     }
 
     override fun readOpinions(questionId: String, offset: Int, limit: Int): List<Opinion> =
         opinionPersistence.findOpinionsByQuestionId(questionId, offset, limit)
+
+    companion object {
+        fun QnAEvent.EnrollQuestion.toQuestion(): Question =
+            Question(category, title, content, userId)
+
+        fun QnAEvent.UpdateQuestion.toQuestion(): Question =
+            Question(category, title, content, userId, questionId)
+
+        fun QnAEvent.EnrollOpinion.toOpinion(): Opinion =
+            Opinion(questionId, title, content, userId)
+
+        fun QnAEvent.UpdateOpinion.toOpinion(): Opinion =
+            Opinion("not used", title, content, userId, opinionId)
+    }
 }

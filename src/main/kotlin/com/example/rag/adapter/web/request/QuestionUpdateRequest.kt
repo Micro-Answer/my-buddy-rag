@@ -1,6 +1,7 @@
 package com.example.rag.adapter.web.request
 
 import com.example.rag.adapter.web.cleanHtml
+import core.rag.event.QnAEvent
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 
@@ -24,3 +25,5 @@ data class QuestionUpdateRequest(
     fun cleanData(): QuestionUpdateRequest =
         QuestionUpdateRequest(userId.cleanHtml(), category.cleanHtml(), title.cleanHtml(), content.cleanHtml())
 }
+fun QuestionUpdateRequest.toEvent(questionId: String) =
+    QnAEvent.UpdateQuestion(category, title, content, userId, questionId)

@@ -21,6 +21,8 @@ private infix fun OpinionEntity.updateWith(domain: Opinion) {
 
 @Component
 class OpinionPersistenceAdapter(private val opinionRepository: OpinionRepository) : OpinionPersistencePort {
+    override fun getUserIdByOpinionId(opinionId: String): String? =
+        opinionRepository.getUserIdByOpinionId(idForMySQL(opinionId))
 
     override fun saveOpinion(domain: Opinion) {
         opinionRepository.save(domain.createEntity())

@@ -3,6 +3,7 @@ package com.example.rag.qna.adapter.output.question
 import core.rag.Question
 
 interface QuestionPersistencePort {
+    fun getUserIdByQuestionId(questionId: String): String?
     fun saveQuestion(domain: Question): Question
     fun updateQuestion(domain: Question)
     fun deleteQuestion(questionId: String)

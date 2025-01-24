@@ -5,6 +5,7 @@ import core.rag.Opinion
 import core.rag.Question
 import core.rag.QuestionTitle
 import core.rag.RagSystem
+import core.rag.event.QnAEvent
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -16,9 +17,8 @@ class RagController(private val rag: RagSystem) {
 
     @PostMapping("/questions")
     fun enrollQuestion(@RequestBody @Valid request: QuestionRequest): ResponseEntity<String> {
-        val (userId, title, category, content) = request.cleanData()
-        rag.enrollQuestion(userId, title, category, content)
-        return ResponseEntity.status(HttpStatus.CREATED).body("$title 등록 성공!")
+        rag.execute(request.cleanData().toEvent())
+        return ResponseEntity.status(HttpStatus.CREATED).body("${request.title} 등록 성공!")
     }
 
     @PutMapping("/questions/{questionId}")
@@ -26,9 +26,8 @@ class RagController(private val rag: RagSystem) {
         @PathVariable questionId: String,
         @RequestBody @Valid request: QuestionUpdateRequest
     ): ResponseEntity<String> {
-        val (userId, category, title, content) = request.cleanData()
-        rag.updateQuestion(userId, questionId, title, category, content)
-        return ResponseEntity.ok("$title 수정 성공!")
+        rag.execute(request.cleanData().toEvent(questionId))
+        return ResponseEntity.ok("${request.title} 수정 성공!")
     }
 
     @DeleteMapping("/questions/{questionId}")
@@ -36,7 +35,7 @@ class RagController(private val rag: RagSystem) {
         @PathVariable questionId: String,
         @RequestParam userId: String
     ): ResponseEntity<Void> {
-        rag.deleteQuestion(userId.cleanHtml(), questionId.cleanHtml())
+        rag.execute(QnAEvent.DeleteQuestion(userId.cleanHtml(), questionId.cleanHtml()))
         return ResponseEntity.noContent().build()
     }
 
@@ -54,9 +53,8 @@ class RagController(private val rag: RagSystem) {
 
     @PostMapping("/opinions")
     fun enrollOpinion(@RequestBody @Valid request: OpinionRequest): ResponseEntity<String> {
-        val (userId, questionId, title, content) = request.cleanData()
-        rag.enrollOpinion(userId, questionId, title, content)
-        return ResponseEntity.status(HttpStatus.CREATED).body("$title 등록 성공!")
+        rag.execute(request.cleanData().toEvent())
+        return ResponseEntity.status(HttpStatus.CREATED).body("${request.title} 등록 성공!")
     }
 
     @PutMapping("/opinions/{opinionId}")
@@ -64,9 +62,8 @@ class RagController(private val rag: RagSystem) {
         @PathVariable opinionId: String,
         @RequestBody @Valid request: OpinionUpdateRequest
     ): ResponseEntity<String> {
-        val (userId, title, content) = request.cleanData()
-        rag.updateOpinion(userId, opinionId, title, content)
-        return ResponseEntity.ok("$title 수정 성공!")
+        rag.execute(request.cleanData().toEvent(opinionId))
+        return ResponseEntity.ok("${request.title} 수정 성공!")
     }
 
     @DeleteMapping("/opinions/{opinionId}")
@@ -74,7 +71,7 @@ class RagController(private val rag: RagSystem) {
         @PathVariable opinionId: String,
         @RequestParam userId: String
     ): ResponseEntity<Void> {
-        rag.deleteOpinion(userId.cleanHtml(), opinionId.cleanHtml())
+        rag.execute(QnAEvent.DeleteOpinion(userId.cleanHtml(), opinionId.cleanHtml()))
         return ResponseEntity.noContent().build()
     }
 

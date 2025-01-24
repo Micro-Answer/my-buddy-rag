@@ -22,6 +22,8 @@ private infix fun QuestionEntity.updateWith(domain: Question) {
 
 @Component
 class QuestionPersistenceAdapter(private val questionRepository: QuestionRepository) : QuestionPersistencePort {
+    override fun getUserIdByQuestionId(questionId: String): String? =
+        questionRepository.getUserIdByQuestionId(idForMySQL(questionId))
 
     override fun saveQuestion(domain: Question): Question =
         questionRepository.save(domain.createEntity())

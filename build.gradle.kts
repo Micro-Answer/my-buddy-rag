@@ -30,8 +30,9 @@ dependencies {
 	implementation(project(":qna"))
 	implementation(project(":search"))
 	implementation(project(":explainer"))
+	implementation(project(":rag"))
 
-	implementation(project(":project-basic"))
+//	implementation(project(":project-basic"))
 //	implementation(project(":project-basic-with-cache"))
 //	implementation(project(":project-basic-with-cache-queue"))
 //	implementation(project(":project-basic-with-cache-queue-executor-service"))
