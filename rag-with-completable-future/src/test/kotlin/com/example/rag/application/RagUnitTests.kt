@@ -1,5 +1,7 @@
 package com.example.rag.application
 
+import com.example.rag.application.configuration.RagConfiguration
+import com.example.rag.application.query.SearchableQnAQuery
 import core.explanation.ExplainerSystem
 import core.qna.QnaSystem
 import core.rag.RagSystem
@@ -19,7 +21,7 @@ class RagUnitTests {
     lateinit var search: SearchSystem
 
     @Autowired
-    lateinit var searchableQnA: SearchableQnA
+    lateinit var searchableQnAQuery: SearchableQnAQuery
 
     @MockitoBean
     lateinit var explainer: ExplainerSystem
