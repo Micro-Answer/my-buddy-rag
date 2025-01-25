@@ -1,47 +1,38 @@
 package com.example.rag.application
 
+import com.example.rag.application.query.SearchableQnAQuery
 import core.explanation.ExplainerSystem
 import core.rag.Opinion
 import core.rag.Question
 import core.rag.QuestionTitle
 import core.rag.RagSystem
+import core.rag.event.QnAEvent
+import core.rag.event.handler.QnAEventHandler
 
-class Rag(private val searchableQnA: SearchableQnA, private val explainer: ExplainerSystem): RagSystem {
-    override fun enrollQuestion(userId: String, title: String, category: String, content: String) {
-        searchableQnA.enrollQuestion(userId, title, category, content)
-    }
+fun QnAEventHandler.produce(event: QnAEvent) {
+    handle(event)
+}
 
-    override fun updateQuestion(userId: String, questionId: String, title: String, category: String, content: String) {
-        searchableQnA.updateQuestion(userId, questionId, title, category, content)
-    }
-
-    override fun deleteQuestion(userId: String, questionId: String) {
-        searchableQnA.deleteQuestion(userId, questionId)
+class Rag(
+    private val producers: Map<Class<out QnAEvent>, QnAEventHandler>,
+    private val searchableQnAQuery: SearchableQnAQuery,
+    private val explainer: ExplainerSystem
+): RagSystem {
+    override fun execute(event: QnAEvent) {
+        producers[event::class.java]?.produce(event) ?: throw IllegalArgumentException("No handler for event: ${event.javaClass}")
     }
 
     override fun readQuestion(questionId: String): Question =
-        searchableQnA.readQuestion(questionId)
+        searchableQnAQuery.readQuestion(questionId)
 
     override fun readQuestionTitles(category: String, offset: Int, limit: Int): List<QuestionTitle> =
-        searchableQnA.readQuestionTitles(category, offset, limit)
-
-    override fun enrollOpinion(userId: String, questionId: String, title: String, content: String) {
-        searchableQnA.enrollOpinion(userId, questionId, title, content)
-    }
-
-    override fun updateOpinion(userId: String, opinionId: String, title: String, content: String) {
-        searchableQnA.updateOpinion(userId, opinionId, title, content)
-    }
-
-    override fun deleteOpinion(userId: String, opinionId: String) {
-        searchableQnA.deleteOpinion(userId, opinionId)
-    }
+        searchableQnAQuery.readQuestionTitles(category, offset, limit)
 
     override fun readOpinions(questionId: String, offset: Int, limit: Int): List<Opinion> =
-        searchableQnA.readOpinions(questionId, offset, limit)
+        searchableQnAQuery.readOpinions(questionId, offset, limit)
 
     override fun search(query: String, age: Int, gender: String?, personalData: String?): String =
-        searchableQnA.search(query).let {
+        searchableQnAQuery.search(query).let {
             explainer.explain(it, "나이: %d, 성별: %s, 개인정보: %s".format(age, gender, personalData))
         }
 }
