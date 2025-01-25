@@ -43,6 +43,8 @@ dependencies {
 	implementation("org.jsoup:jsoup:1.18.3")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 
+	implementation("org.mariadb.jdbc:mariadb-java-client:3.4.1")
+
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("com.h2database:h2")
 	annotationProcessor("org.projectlombok:lombok")
