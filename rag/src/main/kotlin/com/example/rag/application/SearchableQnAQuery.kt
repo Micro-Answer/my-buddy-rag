@@ -1,27 +1,18 @@
 package com.example.rag.application
 
-import core.rag.event.handler.QnAEventHandler
 import core.qna.QnaSystem
 import core.rag.Opinion
 import core.rag.Question
 import core.rag.QuestionTitle
-import core.rag.event.QnAEvent
 import core.search.SearchSystem
 
-
-class SearchableQnA(
+class SearchableQnAQuery(
     private val qna: QnaSystem,
     private val search: SearchSystem,
-    private val handlers: Map<Class<out QnAEvent>, QnAEventHandler>
 ) {
     init {
         println("create SearchableQnA")
     }
-
-    fun execute(event: QnAEvent) {
-        handlers[event::class.java]?.handle(event) ?: throw IllegalArgumentException("No handler for event: ${event.javaClass}")
-    }
-
     fun readQuestion(questionId: String): Question =
         qna.readQuestion(questionId)
 

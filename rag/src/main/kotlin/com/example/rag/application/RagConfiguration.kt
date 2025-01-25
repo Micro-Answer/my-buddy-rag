@@ -1,10 +1,11 @@
 package com.example.rag.application
 
-import com.example.rag.application.handler.*
+import com.example.rag.application.command.handler.*
 import core.explanation.ExplainerSystem
 import core.qna.QnaSystem
 import core.rag.RagSystem
 import core.rag.event.QnAEvent
+import core.rag.event.handler.QnAEventHandler
 import core.search.SearchSystem
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -12,8 +13,8 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class RagConfiguration {
     @Bean
-    fun searchableQnA(qna: QnaSystem, search: SearchSystem): SearchableQnA {
-        val handlers = mapOf(
+    fun handlers(qna: QnaSystem, search: SearchSystem): Map<Class<out QnAEvent>, QnAEventHandler> =
+        mapOf(
             QnAEvent.EnrollQuestion::class.java to EnrollQuestionHandler(qna, search),
             QnAEvent.UpdateQuestion::class.java to UpdateQuestionHandler(qna, search),
             QnAEvent.DeleteQuestion::class.java to DeleteQuestionHandler(qna),
@@ -21,10 +22,16 @@ class RagConfiguration {
             QnAEvent.UpdateOpinion::class.java to UpdateOpinionHandler(qna),
             QnAEvent.DeleteOpinion::class.java to DeleteOpinionHandler(qna)
         )
-        return SearchableQnA(qna, search,handlers)
-    }
 
     @Bean
-    fun ragSystem(searchableQnA: SearchableQnA, explainer: ExplainerSystem): RagSystem =
-        Rag(searchableQnA, explainer)
+    fun searchableQnA(qna: QnaSystem, search: SearchSystem): SearchableQnAQuery =
+        SearchableQnAQuery(qna, search)
+
+    @Bean
+    fun ragSystem(
+        searchableQnAQuery: SearchableQnAQuery,
+        explainer: ExplainerSystem,
+        handlers: Map<Class<out QnAEvent>, QnAEventHandler>
+    ): RagSystem =
+        Rag(searchableQnAQuery, explainer, handlers)
 }
