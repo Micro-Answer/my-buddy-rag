@@ -1,4 +1,4 @@
-package com.example.rag.application
+package com.example.rag.application.query
 
 import core.qna.QnaSystem
 import core.rag.Opinion

@@ -1,5 +1,6 @@
 package com.example.rag.application
 
+import com.example.rag.application.query.SearchableQnAQuery
 import core.explanation.ExplainerSystem
 import core.rag.Opinion
 import core.rag.Question

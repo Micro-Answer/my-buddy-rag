@@ -1,6 +1,8 @@
-package com.example.rag.application
+package com.example.rag.application.configuration
 
+import com.example.rag.application.Rag
 import com.example.rag.application.command.handler.*
+import com.example.rag.application.query.SearchableQnAQuery
 import core.explanation.ExplainerSystem
 import core.qna.QnaSystem
 import core.rag.RagSystem
