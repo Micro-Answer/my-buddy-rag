@@ -24,12 +24,12 @@ class RagConfiguration {
     fun ragSystem(
         searchableQnAQuery: SearchableQnAQuery,
         explainer: ExplainerSystem,
-        enrollQuestionProducer: EnrollQuestionProducer,
-        updateQuestionProducer: UpdateQuestionProducer,
-        deleteQuestionProducer: DeleteQuestionProducer,
-        enrollOpinionProducer: EnrollOpinionProducer,
-        updateOpinionProducer: UpdateOpinionProducer,
-        deleteOpinionProducer: DeleteOpinionProducer
+        enrollQuestionProducer: Producer<QnAEvent.EnrollQuestion>,
+        updateQuestionProducer: Producer<QnAEvent.UpdateQuestion>,
+        deleteQuestionProducer: Producer<QnAEvent.DeleteQuestion>,
+        enrollOpinionProducer: Producer<QnAEvent.EnrollOpinion>,
+        updateOpinionProducer: Producer<QnAEvent.UpdateOpinion>,
+        deleteOpinionProducer: Producer<QnAEvent.DeleteOpinion>
     ): RagSystem {
         val producers: Map<Class<out QnAEvent>, QnAEventHandler> = hashMapOf(
             QnAEvent.EnrollQuestion::class.java to enrollQuestionProducer,

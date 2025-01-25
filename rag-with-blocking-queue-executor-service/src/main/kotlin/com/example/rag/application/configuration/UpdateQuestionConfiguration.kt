@@ -18,12 +18,24 @@ class UpdateQuestionConfiguration {
         ArrayBlockingQueue(1000)
 
     @Bean
-    fun updateQuestionProducer(queue: BlockingQueue<QnAEvent.UpdateQuestion>): UpdateQuestionProducer =
-        UpdateQuestionProducer(queue)
+    fun updateQuestionProducer(queue: BlockingQueue<QnAEvent.UpdateQuestion>): Producer<QnAEvent.UpdateQuestion> {
+        return Producer(queue) { event ->
+            if (event is QnAEvent.UpdateQuestion) {
+                queue.put(event)
+            }
+        }
+    }
 
     @Bean(initMethod = "init", destroyMethod = "cleanup")
-    fun updateQuestionConsumer(queue: BlockingQueue<QnAEvent.UpdateQuestion>, qna: QnaSystem, search: SearchSystem): UpdateQuestionConsumer {
+    fun updateQuestionConsumer(
+        queue: BlockingQueue<QnAEvent.UpdateQuestion>,
+        qna: QnaSystem,
+        search: SearchSystem
+    ): Consumer<QnAEvent.UpdateQuestion> {
         val nThreads = 4
-        return UpdateQuestionConsumer(queue, Executors.newFixedThreadPool(nThreads), nThreads, qna, search)
+        return Consumer(queue, Executors.newFixedThreadPool(nThreads), nThreads) { event ->
+            qna.updateQuestion(event)
+            search.updateQuestion(event)
+        }
     }
 }

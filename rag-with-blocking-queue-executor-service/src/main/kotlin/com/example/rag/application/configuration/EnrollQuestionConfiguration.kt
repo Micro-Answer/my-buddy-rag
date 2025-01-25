@@ -18,12 +18,24 @@ class EnrollQuestionConfiguration {
         ArrayBlockingQueue(1000)
 
     @Bean
-    fun enrollQuestionProducer(queue: BlockingQueue<QnAEvent.EnrollQuestion>): EnrollQuestionProducer =
-        EnrollQuestionProducer(queue)
+    fun enrollQuestionProducer(queue: BlockingQueue<QnAEvent.EnrollQuestion>): Producer<QnAEvent.EnrollQuestion> {
+        return Producer(queue) { event ->
+            if (event is QnAEvent.EnrollQuestion) {
+                queue.put(event)
+            }
+        }
+    }
 
     @Bean(initMethod = "init", destroyMethod = "cleanup")
-    fun enrollQuestionConsumer(queue: BlockingQueue<QnAEvent.EnrollQuestion>, qna: QnaSystem, search: SearchSystem): EnrollQuestionConsumer {
+    fun enrollQuestionConsumer(
+        queue: BlockingQueue<QnAEvent.EnrollQuestion>,
+        qna: QnaSystem,
+        search: SearchSystem
+    ): Consumer<QnAEvent.EnrollQuestion> {
         val nThreads = 4
-        return EnrollQuestionConsumer(queue, Executors.newFixedThreadPool(nThreads), nThreads, qna, search)
+        return Consumer(queue, Executors.newFixedThreadPool(nThreads), nThreads) { event ->
+            val questionId = qna.enrollQuestion(event).questionId
+            search.enrollQuestion(questionId!!, event)
+        }
     }
 }
