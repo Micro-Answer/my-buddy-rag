@@ -1,7 +1,7 @@
 package com.example.rag.application.configuration
 
 import com.example.rag.application.Rag
-import com.example.rag.application.command.producer.*
+import com.example.rag.application.command.Producer
 import com.example.rag.application.query.SearchableQnAQuery
 import core.explanation.ExplainerSystem
 import core.qna.QnaSystem
@@ -21,12 +21,12 @@ class RagConfiguration {
     fun ragSystem(
         qnaQuery: SearchableQnAQuery,
         explainer: ExplainerSystem,
-        enrollQuestionProducer: EnrollQuestionProducer,
-        updateQuestionProducer: UpdateQuestionProducer,
-        deleteQuestionProducer: DeleteQuestionProducer,
-        enrollOpinionProducer: EnrollOpinionProducer,
-        updateOpinionProducer: UpdateOpinionProducer,
-        deleteOpinionProducer: DeleteOpinionProducer
+        enrollQuestionProducer: Producer<QnAEvent.EnrollQuestion>,
+        updateQuestionProducer: Producer<QnAEvent.UpdateQuestion>,
+        deleteQuestionProducer: Producer<QnAEvent.DeleteQuestion>,
+        enrollOpinionProducer: Producer<QnAEvent.EnrollOpinion>,
+        updateOpinionProducer: Producer<QnAEvent.UpdateOpinion>,
+        deleteOpinionProducer: Producer<QnAEvent.DeleteOpinion>
     ): RagSystem {
         val handlers = mapOf(
             QnAEvent.EnrollQuestion::class.java to enrollQuestionProducer,

@@ -1,7 +1,7 @@
 package com.example.rag.application.configuration
 
-import com.example.rag.application.command.consumer.*
-import com.example.rag.application.command.producer.*
+import com.example.rag.application.command.Consumer
+import com.example.rag.application.command.Producer
 import core.qna.QnaSystem
 import core.rag.event.QnAEvent
 import core.search.SearchSystem
@@ -17,10 +17,18 @@ class EnrollQuestionConfiguration {
             = ArrayBlockingQueue(1000)
 
     @Bean
-    fun enrollQuestionProducer(queue: BlockingQueue<QnAEvent.EnrollQuestion>): EnrollQuestionProducer =
-        EnrollQuestionProducer(queue)
+    fun enrollQuestionProducer(queue: BlockingQueue<QnAEvent.EnrollQuestion>): Producer<QnAEvent.EnrollQuestion> =
+        Producer(queue) { event ->
+            if (event is QnAEvent.EnrollQuestion) {
+                queue.put(event)
+            }
+        }
 
     @Bean(initMethod = "init", destroyMethod = "cleanup")
-    fun enrollQuestionConsumer(queue: BlockingQueue<QnAEvent.EnrollQuestion>, qna: QnaSystem, search: SearchSystem): EnrollQuestionConsumer =
-        EnrollQuestionConsumer(queue, qna,search)
+    fun enrollQuestionConsumer(queue: BlockingQueue<QnAEvent.EnrollQuestion>, qna: QnaSystem, search: SearchSystem): Consumer =
+        Consumer {
+            val event = queue.take()
+            val questionId = qna.enrollQuestion(event).questionId
+            search.enrollQuestion(questionId!!, event)
+        }
 }

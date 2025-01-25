@@ -1,7 +1,7 @@
 package com.example.rag.application.configuration
 
-import com.example.rag.application.command.consumer.*
-import com.example.rag.application.command.producer.*
+import com.example.rag.application.command.Consumer
+import com.example.rag.application.command.Producer
 import core.qna.QnaSystem
 import core.rag.event.QnAEvent
 import core.search.SearchSystem
@@ -17,10 +17,18 @@ class UpdateQuestionConfiguration {
             = ArrayBlockingQueue(1000)
 
     @Bean
-    fun updateQuestionProducer(queue: BlockingQueue<QnAEvent.UpdateQuestion>): UpdateQuestionProducer =
-        UpdateQuestionProducer(queue)
+    fun updateQuestionProducer(queue: BlockingQueue<QnAEvent.UpdateQuestion>): Producer<QnAEvent.UpdateQuestion> =
+        Producer(queue) { event ->
+            if (event is QnAEvent.UpdateQuestion) {
+                queue.put(event)
+            }
+        }
 
     @Bean(initMethod = "init", destroyMethod = "cleanup")
-    fun updateQuestionConsumer(queue: BlockingQueue<QnAEvent.UpdateQuestion>, qna: QnaSystem, search: SearchSystem): UpdateQuestionConsumer =
-        UpdateQuestionConsumer(queue, qna, search)
+    fun updateQuestionConsumer(queue: BlockingQueue<QnAEvent.UpdateQuestion>, qna: QnaSystem, search: SearchSystem): Consumer =
+        Consumer {
+            val event = queue.take()
+            qna.updateQuestion(event)
+            search.updateQuestion(event)
+        }
 }

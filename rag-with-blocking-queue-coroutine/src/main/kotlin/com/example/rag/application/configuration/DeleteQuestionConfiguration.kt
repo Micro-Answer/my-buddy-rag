@@ -1,7 +1,7 @@
 package com.example.rag.application.configuration
 
-import com.example.rag.application.command.consumer.DeleteQuestionConsumer
-import com.example.rag.application.command.producer.DeleteQuestionProducer
+import com.example.rag.application.command.Consumer
+import com.example.rag.application.command.Producer
 import core.qna.QnaSystem
 import core.rag.event.QnAEvent
 import core.search.SearchSystem
@@ -17,10 +17,18 @@ class DeleteQuestionConfiguration {
             = ArrayBlockingQueue(1000)
 
     @Bean
-    fun deleteQuestionProducer(queue: BlockingQueue<QnAEvent.DeleteQuestion>): DeleteQuestionProducer =
-        DeleteQuestionProducer(queue)
+    fun deleteQuestionProducer(queue: BlockingQueue<QnAEvent.DeleteQuestion>): Producer<QnAEvent.DeleteQuestion> =
+        Producer(queue) { event ->
+            if (event is QnAEvent.DeleteQuestion) {
+                queue.put(event)
+            }
+        }
 
     @Bean(initMethod = "init", destroyMethod = "cleanup")
-    fun deleteQuestionConsumer(queue: BlockingQueue<QnAEvent.DeleteQuestion>, qna: QnaSystem, search: SearchSystem): DeleteQuestionConsumer =
-        DeleteQuestionConsumer(queue, qna, search)
+    fun deleteQuestionConsumer(queue: BlockingQueue<QnAEvent.DeleteQuestion>, qna: QnaSystem, search: SearchSystem): Consumer =
+        Consumer {
+            val event = queue.take()
+            qna.deleteQuestion(event)
+            search.deleteQuestion(event)
+        }
 }
