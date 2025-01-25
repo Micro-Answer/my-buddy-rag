@@ -13,16 +13,19 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-class RagConfiguration {
+class RagConfiguration(
+    private val opinionHandlerConfiguration: OpinionHandlerConfiguration,
+    private val questionHandlerConfiguration: QuestionHandlerConfiguration
+) {
     @Bean
     fun handlers(qna: QnaSystem, search: SearchSystem): Map<Class<out QnAEvent>, QnAEventHandler> =
         mapOf(
-            QnAEvent.EnrollQuestion::class.java to EnrollQuestionHandler(qna, search),
-            QnAEvent.UpdateQuestion::class.java to UpdateQuestionHandler(qna, search),
-            QnAEvent.DeleteQuestion::class.java to DeleteQuestionHandler(qna),
-            QnAEvent.EnrollOpinion::class.java to EnrollOpinionHandler(qna),
-            QnAEvent.UpdateOpinion::class.java to UpdateOpinionHandler(qna),
-            QnAEvent.DeleteOpinion::class.java to DeleteOpinionHandler(qna)
+            QnAEvent.EnrollQuestion::class.java to questionHandlerConfiguration.enrollQuestion(qna, search),
+            QnAEvent.UpdateQuestion::class.java to questionHandlerConfiguration.updateQuestion(qna, search),
+            QnAEvent.DeleteQuestion::class.java to questionHandlerConfiguration.deleteQuestion(qna, search),
+            QnAEvent.EnrollOpinion::class.java to opinionHandlerConfiguration.enrollOpinion(qna),
+            QnAEvent.UpdateOpinion::class.java to opinionHandlerConfiguration.updateOpinion(qna),
+            QnAEvent.DeleteOpinion::class.java to opinionHandlerConfiguration.deleteOpinion(qna)
         )
 
     @Bean
