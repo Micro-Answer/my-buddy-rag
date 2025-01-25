@@ -1,6 +1,6 @@
 package com.example.rag.application.configuration
 
-import com.example.rag.application.command.handler.QuestionHandler
+import com.example.rag.application.command.handler.Handler
 import core.qna.QnaSystem
 import core.rag.event.QnAEvent
 import core.rag.event.handler.QnAEventHandler
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration
 class QuestionHandlerConfiguration {
     @Bean
     fun enrollQuestion(qna: QnaSystem, search: SearchSystem): QnAEventHandler =
-        QuestionHandler(qna, search) { event ->
+        Handler { event ->
             if (event is QnAEvent.EnrollQuestion) {
                 qna.enrollQuestion(event)
             }
@@ -20,7 +20,7 @@ class QuestionHandlerConfiguration {
 
     @Bean
     fun updateQuestion(qna: QnaSystem, search: SearchSystem): QnAEventHandler =
-        QuestionHandler(qna, search) { event ->
+        Handler { event ->
             if (event is QnAEvent.UpdateQuestion) {
                 qna.updateQuestion(event)
             }
@@ -28,7 +28,7 @@ class QuestionHandlerConfiguration {
 
     @Bean
     fun deleteQuestion(qna: QnaSystem, search: SearchSystem): QnAEventHandler =
-        QuestionHandler(qna, search) { event ->
+        Handler { event ->
             if (event is QnAEvent.DeleteQuestion) {
                 qna.deleteQuestion(event)
             }
