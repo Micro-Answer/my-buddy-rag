@@ -9,10 +9,6 @@ import core.rag.RagSystem
 import core.rag.event.QnAEvent
 import core.rag.event.handler.QnAEventHandler
 
-fun QnAEventHandler.produce(event: QnAEvent) {
-    handle(event)
-}
-
 class Rag(
     private val producers: Map<Class<out QnAEvent>, QnAEventHandler>,
     private val searchableQnAQuery: SearchableQnAQuery,
@@ -35,4 +31,8 @@ class Rag(
         searchableQnAQuery.search(query).let {
             explainer.explain(it, "나이: %d, 성별: %s, 개인정보: %s".format(age, gender, personalData))
         }
+}
+
+fun QnAEventHandler.produce(event: QnAEvent) {
+    handle(event)
 }
