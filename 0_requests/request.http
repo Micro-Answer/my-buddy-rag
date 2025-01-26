@@ -1,0 +1,71 @@
+### 질문 등록
+POST http://localhost:8080/v1/api/rag/questions
+Content-Type: application/json
+
+{
+  "userId": "general_user",
+  "title": "제목은 5 ~ 100",
+  "category": "IT",
+  "content": "내용은 10 ~ 5000 문자"
+}
+
+
+### 질문 업데이트 요청
+PUT http://localhost:8080/v1/api/rag/questions/1
+Content-Type: application/json
+
+{
+  "userId": "general_user",
+  "category": "IT",
+  "title": "Updated Title",
+  "content": "Updated content"
+}
+
+
+### 질문 상세 조회 요청
+GET http://localhost:8080/v1/api/rag/questions/1
+
+
+### 질문 삭제 요청
+DELETE http://localhost:8080/v1/api/rag/questions/1?userId=general_user
+
+
+### 질문 목록 조회 요청
+GET http://localhost:8080/v1/api/rag/questions/titles?category=IT&offset=0&limit=12
+
+
+### 의견 등록 요청
+POST http://localhost:8080/v1/api/rag/opinions
+Content-Type: application/json
+
+{
+  "userId": "expert",
+  "questionId": "1",
+  "title": "Opinion Title",
+  "content": "Opinion content"
+}
+
+
+### 의견 업데이트 요청
+PUT http://localhost:8080/v1/api/rag/opinions/1
+Content-Type: application/json
+
+{
+  "userId": "expert",
+  "title": "Updated Opinion Title",
+  "content": "Updated Opinion content"
+}
+
+
+### 의견 삭제 요청
+DELETE http://localhost:8080/v1/api/rag/opinions/1?userId=expert
+
+
+### 의견 목록 조회 요청
+GET http://localhost:8080/v1/api/rag/opinions?questionId=1&offset=0&limit=10
+
+
+### 맞춤형 해설 질의응답 검색 요청
+GET http://localhost:8080/v1/api/rag/search?query=test&age=25&gender=male&personalData=personalData
+
+
