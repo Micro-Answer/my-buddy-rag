@@ -5,6 +5,7 @@ import com.example.rag.qna.adapter.output.DBTransparency.idForTransparency
 import core.rag.Opinion
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 private fun Opinion.createEntity() =
@@ -24,16 +25,19 @@ class OpinionPersistenceAdapter(private val opinionRepository: OpinionRepository
     override fun getUserIdByOpinionId(opinionId: String): String? =
         opinionRepository.getUserIdByOpinionId(idForMySQL(opinionId))
 
+    @Transactional
     override fun saveOpinion(domain: Opinion) {
         opinionRepository.save(domain.createEntity())
     }
 
+    @Transactional
     override fun updateOpinion(domain: Opinion) {
         val opinionEntity = getOpinionEntity(domain.opinionId)
         opinionEntity updateWith domain
         opinionRepository.save(opinionEntity)
     }
 
+    @Transactional
     override fun deleteOpinionById(opinionId: String) {
         opinionRepository.deleteById(idForMySQL(opinionId))
     }
