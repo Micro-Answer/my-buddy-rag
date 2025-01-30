@@ -2,6 +2,7 @@ package com.example.rag.application.configuration
 
 import com.example.rag.application.command.Consumer
 import com.example.rag.application.command.Producer
+import com.example.util.ThroughputMonitor
 import core.qna.QnaSystem
 import core.rag.event.QnAEvent
 import core.search.SearchSystem
@@ -12,6 +13,11 @@ import java.util.concurrent.BlockingQueue
 
 @Configuration
 class DeleteQuestionConfiguration {
+    private val deleteQuestionMonitor = ThroughputMonitor("Delete_question_with_coroutine")
+
+    init {
+        deleteQuestionMonitor.startMonitoring()
+    }
     @Bean
     fun deleteQuestionQueue(): BlockingQueue<QnAEvent.DeleteQuestion>
             = ArrayBlockingQueue(1000)
@@ -30,5 +36,6 @@ class DeleteQuestionConfiguration {
             val event = queue.take()
             qna.deleteQuestion(event)
             search.deleteQuestion(event)
+            deleteQuestionMonitor.increment()
         }
 }

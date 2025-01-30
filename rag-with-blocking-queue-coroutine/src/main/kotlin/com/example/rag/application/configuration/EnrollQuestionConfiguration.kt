@@ -2,6 +2,7 @@ package com.example.rag.application.configuration
 
 import com.example.rag.application.command.Consumer
 import com.example.rag.application.command.Producer
+import com.example.util.ThroughputMonitor
 import core.qna.QnaSystem
 import core.rag.event.QnAEvent
 import core.search.SearchSystem
@@ -12,6 +13,12 @@ import java.util.concurrent.BlockingQueue
 
 @Configuration
 class EnrollQuestionConfiguration {
+    private val enrollQuestionMonitor = ThroughputMonitor("Enroll_question_with_coroutine")
+
+    init {
+        enrollQuestionMonitor.startMonitoring()
+    }
+
     @Bean
     fun enrollQuestionQueue(): BlockingQueue<QnAEvent.EnrollQuestion>
             = ArrayBlockingQueue(1000)
@@ -30,5 +37,6 @@ class EnrollQuestionConfiguration {
             val event = queue.take()
             val questionId = qna.enrollQuestion(event).questionId
             search.enrollQuestion(questionId!!, event)
+            enrollQuestionMonitor.increment()
         }
 }
