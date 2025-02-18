@@ -12,15 +12,15 @@ class OpinionEventPublisher(
     private val rabbitTemplate: RabbitTemplate
 ) {
     fun writeEvent(event: OpinionEvent) {
-        val id = UUID.randomUUID()
         val eventStore = OpinionEventStore(
-            id,
+            UUID.randomUUID(),
             event.eventType,
             event.questionId,
             event.title,
             event.content,
             event.userId
         )
-        writeEvent.recordOpinionEvent(eventStore)
+        val id = writeEvent.recordOpinionEvent(eventStore)
+        rabbitTemplate.convertAndSend("topic.opinion", id)
     }
 }
