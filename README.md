@@ -8,25 +8,25 @@
 ### 코틀린 
 - [x] 확장 함수
 - [x] 한줄 함수
-- [ ] apply, run, let, also, with 과하지 않게 적재적소 활용 
-- [ ] 코루틴 
+- [x] apply, run, let, also, with 활용 
+- [x] 코루틴 
 - [ ] 패턴 매칭 
 - [ ] 구조 분해
 - [x] 컬렉션 연산
 - [ ] 함수형 프로그래밍 
 
 ### 멀티쓰레드 
-- [ ] 직접 Executor 활용 
-- [ ] Spring 멀티 쓰레드 활용 
+- [x] 직접 Executor 활용 
+- [x] Spring 멀티 쓰레드 활용 
 
 ### 비동기 프로그래밍 
-- [ ] CompletableFuture 활용 
-- [ ] Spring Async 활용 
+- [x] CompletableFuture 활용 
+- [x] Spring Async 활용 
 
 ### 이벤트 
 - [ ] 함수형 프로그래밍의 패텅 매칭을 활용하여 직접 구현 
-- [ ] Spring ApplicationEvent 활용 
-- [ ] 이벤트 브로커 활용
+- [x] Spring ApplicationEvent 활용 
+- [x] 이벤트 브로커 활용
 
 ### DB 
 - [ ] JPA QueryDSL
@@ -37,11 +37,11 @@
 - [ ] k6로 성공 비율 측정 
 
 ### 처리량 향상 
-- [ ] Blocking Queue로 처리량 향상
-- [ ] 이벤트 브로커로 처리량 향상
+- [x] Blocking Queue 활용 
+- [x] 이벤트 브로커 활용 
 
 ### 캐싱 
-- [ ] 직접 구현 
+- [x] 동기화된 LRU 캐시 직접 구현 
 - [ ] Spring 캐싱 활용 
 - [ ] Redis 활용 
 
