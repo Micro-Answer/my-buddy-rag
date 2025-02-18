@@ -27,7 +27,7 @@ class DoublyLinkedList<K, V>(
         }
     }
 
-    private fun remove(node: Node<K, V>) {
+    fun remove(node: Node<K, V>) {
         if (node == head) {
             head = node.next
         } else {
