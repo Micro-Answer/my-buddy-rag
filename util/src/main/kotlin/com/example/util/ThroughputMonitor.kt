@@ -1,20 +1,34 @@
 package com.example.util
 
 import java.util.concurrent.atomic.AtomicLong
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileWriter
 import kotlin.concurrent.fixedRateTimer
 
-class ThroughputMonitor(private val taskName: String, private val completedTasks:AtomicLong = AtomicLong(0)) {
+class ThroughputMonitor(private val taskName: String, private val completedTasks: AtomicLong = AtomicLong(0)) {
 
-    // 작업이 완료될 때 호출
+    private val logFile = File("./throughput/${taskName}_throughput.log")
+    private val writer = BufferedWriter(FileWriter(logFile, true))
+
     fun increment() {
         completedTasks.incrementAndGet()
     }
 
-    // 초당 처리량을 출력
     fun startMonitoring() {
         fixedRateTimer("ThroughputMonitor", daemon = true, initialDelay = 0, period = 1000) {
-            val tasksPerSecond = completedTasks.getAndSet(0) // 1초간 처리된 작업 수
-            println("$taskName Throughput: $tasksPerSecond tasks/sec")
+            val tasksPerSecond = completedTasks.getAndSet(0)
+            val logMessage = "$tasksPerSecond tasks/sec"
+            writeLog(logMessage)
         }
+    }
+
+    private fun writeLog(message: String) {
+        writer.write("$message\n")
+        writer.flush()
+    }
+
+    fun stopMonitoring() {
+        writer.close()
     }
 }
